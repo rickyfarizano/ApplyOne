@@ -34,4 +34,10 @@ class Job extends Model
     {
         return $this->belongsTo(workModality::class, 'work_modality_id');
     }
+
+    // Relacion uno a muchos con platforms
+    public function platforms()
+    {
+        $this->belongsTo(Platforms::class, 'platform_id');
+    }
 }
