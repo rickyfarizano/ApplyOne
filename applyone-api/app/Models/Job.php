@@ -18,6 +18,7 @@ class Job extends Model
         'direction',
         'work_modality_id',
         'job_board_id',
+        'platform_id',
         'application_start_date',
         'application_end_date',
         'job_state_id'
