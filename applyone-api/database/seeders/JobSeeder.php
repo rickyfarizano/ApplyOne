@@ -23,6 +23,7 @@ class JobSeeder extends Seeder
                 'direction' => 'Av. ejemplo 12345',
                 'work_modality_id' => 3,
                 'job_board_id' => 1,
+                'platform_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
                 'job_state_id' => 2
@@ -36,6 +37,7 @@ class JobSeeder extends Seeder
                 'direction' => 'Av. ejemplo 12345',
                 'work_modality_id' => 1,
                 'job_board_id' => 1,
+                'platform_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
                 'job_state_id' => 2
@@ -49,6 +51,7 @@ class JobSeeder extends Seeder
                 'direction' => 'Av. ejemplo 12345',
                 'work_modality_id' => 1,
                 'job_board_id' => 1,
+                'platform_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
                 'job_state_id' => 2
@@ -62,6 +65,7 @@ class JobSeeder extends Seeder
                 'direction' => 'Av. ejemplo 12345',
                 'work_modality_id' => 3,
                 'job_board_id' => 1,
+                'platform_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
                 'job_state_id' => 2
