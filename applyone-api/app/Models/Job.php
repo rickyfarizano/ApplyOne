@@ -23,8 +23,15 @@ class Job extends Model
         'job_state_id'
     ];
 
+    // relacion uno a muchos con job_state
     public function jobState()
     {
         return $this->belongsTo(JobState::class, 'job_state_id');
+    }
+
+    // Relacion uno a muchos con works_modality
+    public function workModality()
+    {
+        return $this->belongsTo(workModality::class, 'work_modality_id');
     }
 }

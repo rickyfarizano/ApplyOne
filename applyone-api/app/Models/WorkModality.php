@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobState extends Model
+class WorkModality extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['state_name'];
+    protected $fillable = ['modality_name'];
 
-    // Relación inversa: un estado tiene muchos trabajos
+    // Relacion uno a muchos con jobs
     public function jobs()
     {
-        return $this->hasMany(Job::class, 'job_state_id');
+        return $this->hasMany(Job::class, 'work_modality_id');
     }
 }
