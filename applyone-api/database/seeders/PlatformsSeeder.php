@@ -16,7 +16,7 @@ class PlatformsSeeder extends Seeder
         DB::table('platforms')->insert([
             [
                 'id' => 1,
-                'platform_name' => 'CompuTrabajao',
+                'platform_name' => 'Computrabajo',
                 'platform_url' => 'https://candidato.ar.computrabajo.com/candidate/match/?idapp=3&f=FEE939887FF3D46C',
             ],
             [
