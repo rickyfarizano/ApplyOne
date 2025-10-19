@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\JobsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobsController;
+use APP\Http\Controllers\PlatformsController;
 
 Route::get('/', function () {
     return response()->json(['message' => 'Bienvenido a la API de ApplyOne']);
@@ -27,3 +28,4 @@ Route::delete('jobs/delete-job/{id}', [App\Http\Controllers\JobsController::clas
 // PLATFORMS
 // Rutas de obtencion de plataformas
 Route::get('/platforms/get-all-platforms', [App\Http\Controllers\PlatformsController::class, 'getAllPlatforms']);
+Route::post('platforms/create-platforms', [App\Http\Controllers\PlatformsController::class, 'createPlatforms']);
