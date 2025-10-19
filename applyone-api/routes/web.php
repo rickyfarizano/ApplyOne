@@ -16,7 +16,6 @@ Route::get('/csrf-token', function() {
 Route::get('/jobs/get-all-jobs', [App\Http\Controllers\JobsController::class, 'getAllJobs']);
 Route::get('/jobs/get-job-by-id/{id}', [App\Http\Controllers\JobsController::class, 'getJobById']);
 Route::get('/jobs/get-job-by-platform/{platformName}', [App\Http\Controllers\JobsController::class, 'getJobsByPlatform']);
-
 // Ruta de creacion de trabajos
 Route::post('/jobs/create-job', [App\Http\Controllers\JobsController::class, 'createJob']);
 // Ruta de edicion de trabajos -> enviar campos a editar en json
