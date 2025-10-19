@@ -13,7 +13,7 @@ class WorkModalitySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('work_modality')->insert([
+        DB::table('work_modalities')->insert([
             [
                 'id' => 1,
                 'modality_name' => 'presencial',
