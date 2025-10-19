@@ -122,6 +122,11 @@ class JobsController extends Controller
         ]);
     }
 
+    /**
+     * Permite editar un trabajo
+     * @param $request datos a editar
+     * @param $id identificador del trabajo a editar
+     */
     public function editJob(Request $request, $id)
     {
         $job = Job::findOrFail($id);
@@ -176,6 +181,20 @@ class JobsController extends Controller
         return response()->json([
             'message' => 'trabajo editado con exito!',
             'job' => $job->load(['jobState', 'workModality', 'platforms'])
+        ]);
+    }
+
+    /**
+     * Permite eliminar un trabajo
+     * @param $id identificador del trabajo a eliminar
+     */
+    public function deleteJob($id)
+    {
+        $job = Job::findOrFail($id);
+        $job->delete();
+        return response()->json([
+            'message' => 'Trabajo eliminado exitosamente!',
+            'job' => $id
         ]);
     }
 }

@@ -22,3 +22,4 @@ Route::post('/jobs/create-job', [App\Http\Controllers\JobsController::class, 'cr
 // Ruta de edicion de trabajos -> enviar campos a editar en json
 Route::patch('/jobs/edit-job/{id}', [App\Http\Controllers\JobsController::class, 'editJob']);
 // Ruta de eliminacion de trabajos
+Route::delete('jobs/delete-job/{id}', [App\Http\Controllers\JobsController::class, 'deleteJob']);
