@@ -64,4 +64,14 @@ class PlatformsController extends Controller
             'platform' => $platform
         ]);
     }
+
+    public function deletePlatforms($id)
+    {
+        $platform = Platforms::findOrFail($id);
+        $platform->delete();
+        return response()->json([
+            'message' => 'plataforma eliminada exitosamente!',
+            'platform' => $id
+        ]);
+    }
 }
