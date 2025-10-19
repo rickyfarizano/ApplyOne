@@ -39,6 +39,6 @@ class Job extends Model
     // Relacion uno a muchos con platforms
     public function platforms()
     {
-        $this->belongsTo(Platforms::class, 'platform_id');
+        return $this->belongsTo(Platforms::class, 'platform_id');
     }
 }
