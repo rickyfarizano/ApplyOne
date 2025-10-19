@@ -29,3 +29,4 @@ Route::delete('jobs/delete-job/{id}', [App\Http\Controllers\JobsController::clas
 // Rutas de obtencion de plataformas
 Route::get('/platforms/get-all-platforms', [App\Http\Controllers\PlatformsController::class, 'getAllPlatforms']);
 Route::post('platforms/create-platforms', [App\Http\Controllers\PlatformsController::class, 'createPlatforms']);
+Route::patch('platforms/edit-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'editPlatforms']);

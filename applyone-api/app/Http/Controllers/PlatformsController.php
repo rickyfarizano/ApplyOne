@@ -40,4 +40,28 @@ class PlatformsController extends Controller
             'platform' => $platform
         ]);
     }
+
+    public function editPlatforms(Request $request, $id)
+    {
+        $platform = Platforms::findOrFail($id);
+
+        // dd($platform);
+
+         $validateData = $request->validate([
+            'platform_name' => 'nullable|string|max:255',
+            'platform_url' => 'nullable|string'
+        ], [
+            'platform_name.string' => 'El nombre de la plataforma debe ser un texto',
+            'platform_name.max' => 'El nombre de la plataforma no puede superar los 255 caracteres',
+
+            'platform_url.string' => 'La url debe ser un texto'
+        ]);
+
+        $platform->update($validateData);
+
+        return response()->json([
+            'message' => 'plataforma actualizada exitosamente!',
+            'platform' => $platform
+        ]);
+    }
 }
