@@ -35,3 +35,4 @@ Route::delete('platforms/delete-platforms/{id}', [App\Http\Controllers\Platforms
 
 // JOB STATES
 Route::get('/job-states/get-all-states', [App\Http\Controllers\JobStatesController::class, 'getAllStates']);
+Route::post('job-states/create-job-state', [App\Http\Controllers\JobStatesController::class, 'createJobState']);
