@@ -3,7 +3,7 @@ import BtnPlatforma from '../../ui/BtnPlataforma/BtnPlatforma.jsx'
 import styles from './filtroPlataformasPostulaciones.module.css'
 import axios from 'axios'
 
-const FiltroPlataformasPostulaciones = ({setActualPlatform}) => {
+const FiltroPlataformasPostulaciones = ({setActualPlatform, setAllPlatforms}) => {
     const [platforms, setPlatforms] = useState([])
 
     useEffect(() => {
@@ -12,7 +12,7 @@ const FiltroPlataformasPostulaciones = ({setActualPlatform}) => {
                 const request = await axios.get('http://127.0.0.1:8000/platforms/get-all-platforms')
                 // console.log(request.data);
                 setPlatforms(request.data)
-
+                setAllPlatforms(request.data);
                 const firstPlatform = request.data[0]
                 setActualPlatform(firstPlatform.platform_name)
                 

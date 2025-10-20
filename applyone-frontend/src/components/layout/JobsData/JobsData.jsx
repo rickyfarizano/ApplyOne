@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom' 
 
 const JobsData = ({
     job_id,
@@ -13,7 +14,11 @@ const JobsData = ({
         <td>{job_title}</td>
         <td>{company_name}</td>
         <td>{start_date}</td>
-        <td>job_state</td>
+        <td>{job_state}</td>
+        <td className='btns'>
+            <NavLink>Editar</NavLink>
+            <NavLink>Eliminar</NavLink>
+        </td>
     </tr>
     </>
   )

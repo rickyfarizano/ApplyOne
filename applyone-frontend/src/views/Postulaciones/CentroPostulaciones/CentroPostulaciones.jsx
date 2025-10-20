@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styles from './centroPostulaciones.module.css'
 import FiltroPlataformasPostulaciones from '../../../components/layout/FiltroPlataformasPostulaciones/FiltroPlataformasPostulaciones.jsx'
+import JobsTable from '../../../components/layout/JobsTable/JobsTable.jsx'
 import axios from 'axios'
 
 const CentroPostulaciones = () => {
+  const [allPlatforms, setAllPlatforms] = useState([])
   const [actualPlatform, setActualPlatform] = useState()
   const [jobs_x_platform, setJobs_x_platform] = useState([])
 
@@ -11,6 +13,9 @@ const CentroPostulaciones = () => {
     if(!actualPlatform) return;
     const getJobsXplatform = async (actualPlatform) => {
       try {
+        if(!allPlatforms.includes(actualPlatform)) {
+          setJobs_x_platform([])
+        }
         const request = await axios.get(`http://127.0.0.1:8000/jobs/get-job-by-platform/${actualPlatform}`);
         setJobs_x_platform(request.data);
         // console.log(request.data)
@@ -30,8 +35,8 @@ const CentroPostulaciones = () => {
             </div>
 
           <div className="container_jobs">
-            <FiltroPlataformasPostulaciones setActualPlatform={setActualPlatform} />
-
+            <FiltroPlataformasPostulaciones setActualPlatform={setActualPlatform} setAllPlatforms={setAllPlatforms} />
+            <JobsTable filtered_jobs={jobs_x_platform} />
           </div>
         </div>
     </section>
