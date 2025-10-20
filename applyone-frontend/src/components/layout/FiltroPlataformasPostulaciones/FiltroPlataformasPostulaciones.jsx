@@ -9,6 +9,7 @@ const FiltroPlataformasPostulaciones = () => {
         const getPlatforms = async () => {
             try {
                 const request = await axios.get('http://127.0.0.1:8000/platforms/get-all-platforms')
+                console.log(request.data);
                 setPlatforms(request.data)
                 
             } catch (error) {
