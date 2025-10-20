@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './centroPostulaciones.module.css'
+import FiltroPlataformasPostulaciones from '../../../components/layout/FiltroPlataformasPostulaciones/FiltroPlataformasPostulaciones.jsx'
 
 const CentroPostulaciones = () => {
   return (
@@ -11,7 +12,7 @@ const CentroPostulaciones = () => {
                 <a href="">Agregar postulacion</a>
             </div>
 
-            
+        <FiltroPlataformasPostulaciones />
         </div>
     </section>
     </>
