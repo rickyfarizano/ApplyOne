@@ -60,4 +60,18 @@ class JobStatesController extends Controller
             'job_state' => $jobState
         ]);
     }
+
+    /**
+     * Permite eliminar un estado
+     */
+    public function deleteJobState($id)
+    {
+        $jobState = JobState::findOrFail($id);
+        // dd($jobState);
+        $jobState->delete();
+        return response()->json([
+            'message' => 'Estado eliminado exitosamente!',
+            'job_state' => $id
+        ]);
+    }
 }
