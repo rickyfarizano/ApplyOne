@@ -8,8 +8,8 @@ function App() {
   return (
     <>
     <main>
+      <NavBar />
       <div className="container">
-        <NavBar />
         <Routes>
           <Route path='/mis-postulaciones/centro-de-postulaciones' element={<CentroPostulaciones />} />
         </Routes>
