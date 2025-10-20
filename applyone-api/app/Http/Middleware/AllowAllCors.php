@@ -8,16 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AllowAllCors
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        $response = $next($request);
+        // Si es preflight OPTIONS, devolvemos respuesta vacía con headers CORS
+        if ($request->getMethod() === "OPTIONS") {
+            $response = response('', 200);
+        } else {
+            $response = $next($request);
+        }
 
-        // Agregar cabeceras CORS
+        // Cabeceras CORS
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
         $response->headers->set('Access-Control-Allow-Headers', '*');

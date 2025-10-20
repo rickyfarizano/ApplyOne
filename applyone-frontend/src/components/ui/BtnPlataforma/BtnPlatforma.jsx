@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const BtnPlatforma = ({platform_name}) => {
+const BtnPlatforma = ({platform_name = '', setActualPlatform}) => {
   return (
     <>
-    <a href="#">{platform_name}</a>
+    <button type='button' onClick={() => setActualPlatform(platform_name)}>{platform_name}</button>
     </>
   )
 }
