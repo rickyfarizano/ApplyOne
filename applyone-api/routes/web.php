@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobsController;
-use APP\Http\Controllers\PlatformsController;
+use App\Http\Controllers\PlatformsController;
+use App\Http\Controllers\JobStatesController;
 
 Route::get('/', function () {
     return response()->json(['message' => 'Bienvenido a la API de ApplyOne']);
@@ -28,6 +29,12 @@ Route::delete('jobs/delete-job/{id}', [App\Http\Controllers\JobsController::clas
 // PLATFORMS
 // Rutas de obtencion de plataformas
 Route::get('/platforms/get-all-platforms', [App\Http\Controllers\PlatformsController::class, 'getAllPlatforms']);
-Route::post('platforms/create-platforms', [App\Http\Controllers\PlatformsController::class, 'createPlatforms']);
-Route::patch('platforms/edit-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'editPlatforms']);
-Route::delete('platforms/delete-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'deletePlatforms']);
+Route::post('/platforms/create-platforms', [App\Http\Controllers\PlatformsController::class, 'createPlatforms']);
+Route::patch('/platforms/edit-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'editPlatforms']);
+Route::delete('/platforms/delete-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'deletePlatforms']);
+
+// JOB STATES
+Route::get('/job-states/get-all-states', [App\Http\Controllers\JobStatesController::class, 'getAllStates']);
+Route::post('/job-states/create-job-state', [App\Http\Controllers\JobStatesController::class, 'createJobState']);
+Route::put('/job-states/edit-job-state/{id}', [App\Http\Controllers\JobStatesController::class, 'editJobState']);
+Route::delete('job-states/delete-job-state/{id}', [App\Http\Controllers\JobStatesController::class, 'deleteJobState']);
