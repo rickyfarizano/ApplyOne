@@ -29,10 +29,11 @@ Route::delete('jobs/delete-job/{id}', [App\Http\Controllers\JobsController::clas
 // PLATFORMS
 // Rutas de obtencion de plataformas
 Route::get('/platforms/get-all-platforms', [App\Http\Controllers\PlatformsController::class, 'getAllPlatforms']);
-Route::post('platforms/create-platforms', [App\Http\Controllers\PlatformsController::class, 'createPlatforms']);
-Route::patch('platforms/edit-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'editPlatforms']);
-Route::delete('platforms/delete-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'deletePlatforms']);
+Route::post('/platforms/create-platforms', [App\Http\Controllers\PlatformsController::class, 'createPlatforms']);
+Route::patch('/platforms/edit-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'editPlatforms']);
+Route::delete('/platforms/delete-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'deletePlatforms']);
 
 // JOB STATES
 Route::get('/job-states/get-all-states', [App\Http\Controllers\JobStatesController::class, 'getAllStates']);
-Route::post('job-states/create-job-state', [App\Http\Controllers\JobStatesController::class, 'createJobState']);
+Route::post('/job-states/create-job-state', [App\Http\Controllers\JobStatesController::class, 'createJobState']);
+Route::put('/job-states/edit-job-state/{id}', [App\Http\Controllers\JobStatesController::class, 'editJobState']);

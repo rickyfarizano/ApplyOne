@@ -37,4 +37,27 @@ class JobStatesController extends Controller
             'job_state' => $jobState
         ]);
     }
+
+    /**
+     * Permite actualizar los estados
+     */
+    public function editJobState(Request $request, $id)
+    {
+        $jobState = JobState::findOrFail($id);
+        // dd($jobState);
+
+        $validatedData = $request->validate([
+            'state_name' => 'nullable|string|max:255'
+        ], [
+            'state_name.string' => 'El nombre del estado debe ser un texto',
+            'state_name.max' => 'El nombre del estado solo puede tener 255 caracteres como maximo'
+        ]);
+
+        $jobState->update($validatedData);
+
+        return response()->json([
+            'message' => 'estado actualizado exitosamente!',
+            'job_state' => $jobState
+        ]);
+    }
 }
