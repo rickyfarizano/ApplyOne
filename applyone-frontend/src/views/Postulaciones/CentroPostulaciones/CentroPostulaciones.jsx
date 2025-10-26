@@ -43,9 +43,9 @@ const CentroPostulaciones = () => {
   }, [])
   return (
     <>
-    <section className="centro-postulaciones">
-        <div className="container">
-            <div className="titulo-acciones">
+    <section className={styles.centro_postulaciones}>
+        <div className={styles.container}>
+            <div className={styles.titulo_acciones}>
                 <h1 className="titulo">Postulaciones</h1>
                 <a href="">Agregar postulacion</a>
             </div>
@@ -56,7 +56,7 @@ const CentroPostulaciones = () => {
           </div>
 
           {/* modal del formulario */}
-          <div className="modal_formulario">
+          {/* <div className="modal_formulario">
             <div className="modal_data">
               <div className="container_btn">
                 <button className='close_modal'>X</button>
@@ -67,7 +67,7 @@ const CentroPostulaciones = () => {
               platforms={allPlatforms}
               />
             </div>
-          </div>
+          </div> */}
         </div>
     </section>
     </>

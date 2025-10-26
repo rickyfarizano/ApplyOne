@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import styles from './navBar.module.css'
+import ApplyOneLogo from '../../../assets/images/logo-applyone.png'
 import { NavLink } from 'react-router-dom'
 
 const NavBar = () => {
@@ -10,8 +12,12 @@ const NavBar = () => {
 
   return (
     <>
-    <aside className="navbar">
-        <div className="container">
+    <aside className={styles.navbar}>
+        <div className={styles.container}>
+            <figure className="container-logo">
+                <img src={ApplyOneLogo} alt="Logo de applyone" />
+            </figure>
+
             <nav className="menu">
                 <ul className="link">
                     <li>
