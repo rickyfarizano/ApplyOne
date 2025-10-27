@@ -3,6 +3,7 @@ import styles from './centroPostulaciones.module.css'
 import FiltroPlataformasPostulaciones from '../../../components/layout/FiltroPlataformasPostulaciones/FiltroPlataformasPostulaciones.jsx'
 import JobsTable from '../../../components/layout/JobsTable/JobsTable.jsx'
 import FormularioCreacionTrabajos from '../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
+import { getJobsByPlatform } from '../../../services/jobsServices.js'
 import axios from 'axios'
 
 const CentroPostulaciones = () => {
@@ -19,9 +20,11 @@ const CentroPostulaciones = () => {
         if(!allPlatforms.includes(actualPlatform)) {
           setJobs_x_platform([])
         }
-        const request = await axios.get(`http://127.0.0.1:8000/jobs/get-job-by-platform/${actualPlatform}`);
-        setJobs_x_platform(request.data);
-        // console.log(request.data)
+
+        // utilizo el service para obtener trabajos por una plataforma concreta
+        const request = await getJobsByPlatform(actualPlatform);
+        setJobs_x_platform(request);
+        console.log(request)
       } catch (error) {
         console.error("Error al obtener los trabajos", error.message);
       }
