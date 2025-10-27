@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BtnPlatforma from '../../ui/BtnPlataforma/BtnPlatforma.jsx'
+import { getAllPlatforms } from '../../../services/platformsServices.js'
 import styles from './filtroPlataformasPostulaciones.module.css'
-import axios from 'axios'
 
 const FiltroPlataformasPostulaciones = ({setActualPlatform, setAllPlatforms}) => {
     const [platforms, setPlatforms] = useState([])
@@ -9,11 +9,12 @@ const FiltroPlataformasPostulaciones = ({setActualPlatform, setAllPlatforms}) =>
     useEffect(() => {
         const getPlatforms = async () => {
             try {
-                const request = await axios.get('http://127.0.0.1:8000/platforms/get-all-platforms')
+                // llamo al servicio getAllPlatforms
+                const request = await getAllPlatforms()
                 // console.log(request.data);
-                setPlatforms(request.data)
-                setAllPlatforms(request.data);
-                const firstPlatform = request.data[0]
+                setPlatforms(request)
+                setAllPlatforms(request);
+                const firstPlatform = request[0]
                 setActualPlatform(firstPlatform.platform_name)
                 
             } catch (error) {

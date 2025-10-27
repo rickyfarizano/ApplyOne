@@ -4,6 +4,7 @@ import FiltroPlataformasPostulaciones from '../../../components/layout/FiltroPla
 import JobsTable from '../../../components/layout/JobsTable/JobsTable.jsx'
 import FormularioCreacionTrabajos from '../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
 import { getJobsByPlatform } from '../../../services/jobsServices.js'
+import { getAllJobStates } from '../../../services/jobStatesServices.js'
 import axios from 'axios'
 
 const CentroPostulaciones = () => {
@@ -24,7 +25,7 @@ const CentroPostulaciones = () => {
         // utilizo el service para obtener trabajos por una plataforma concreta
         const request = await getJobsByPlatform(actualPlatform);
         setJobs_x_platform(request);
-        console.log(request)
+        // console.log(request)
       } catch (error) {
         console.error("Error al obtener los trabajos", error.message);
       }
@@ -35,8 +36,9 @@ const CentroPostulaciones = () => {
   useEffect(() => {
     const getAllStates = async () => {
       try {
-        const request = await axios.get('http://127.0.0.1:8000/job-states/get-all-states');
-        setJobStates(request.data)
+        // utilizo el service para obtener los estados de los trabajos
+        const request = await getAllJobStates();
+        setJobStates(request)
       } catch (error) {
         console.error("Error al obtener los trabajos", error.message);
       }
