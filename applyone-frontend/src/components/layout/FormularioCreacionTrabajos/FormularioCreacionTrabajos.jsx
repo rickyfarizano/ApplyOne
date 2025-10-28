@@ -1,7 +1,45 @@
 import React, { useState } from 'react'
 import { createJob } from '../../../services/jobsServices.js'
+import joi from 'joi'
 
 // 3. validar inputs del form
+// TODO parsear el salario antes de que se pushee al form-data
+
+const schema = {
+    job_title: joi.string().min(5).required().messages({
+        'any.required': 'El nombre del trabajo es obligatorio',
+        'string.base': 'El titulo del trabajo debe ser un texto',
+        'string.empty': 'El nombre del trabajo no puede quedar vacio',
+        'string.min': 'El nombre debe tener como minimo 5 caracteres'
+    }),
+    company_name: joi.string().min(5).required().messages({
+        'any.required': 'El nombre de la empresa es obligatorio',
+        'string.base': 'El nombre de la empresa debe ser un texto',
+        'string.empty': 'El nombre de la empresa no puede quedar vacio',
+        'string.min': 'El nombre de la empresa tener como minimo 5 caracteres'
+    }),
+    salary: joi.number().messages({
+        'number.base': 'El sueldo del trabajo debe ser un numero',
+        'number.integer': 'El sueldo del trabajo debe ser un numero entero'
+    }),
+    location: joi.string().messages({
+        'string.base': 'La ubicacion del trabajo debe ser un texto'
+    }),
+    direction: joi.string().messages({
+        'string.base': 'La direccion del trabajo debe ser un texto'
+    }),
+    work_modality_id: joi.string().messages({
+        'string.base': 'El id de la modalidad del trabajo debe ser un texto'
+    }),
+    job_board_id: "1",
+    platform_id: joi.string().messages({
+        'string.base': 'El id de la plataforma del trabajo debe ser un texto'
+    }),
+    job_state_id: joi.string().messages({
+        'string.base': 'El estado del trabajo debe ser un texto'
+    }),
+
+}
 
 const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJobsUpdated}) => {
     const [formData, setFormData] = useState({
