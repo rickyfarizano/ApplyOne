@@ -61,7 +61,7 @@ const CentroPostulaciones = () => {
           </div>
 
           {/* modal del formulario */}
-          {/* <div className="modal_formulario">
+          <div className="modal_formulario">
             <div className="modal_data">
               <div className="container_btn">
                 <button className='close_modal'>X</button>
@@ -72,7 +72,7 @@ const CentroPostulaciones = () => {
               platforms={allPlatforms}
               />
             </div>
-          </div> */}
+          </div>
         </div>
     </section>
     </>
