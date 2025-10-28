@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styles from './centroPostulaciones.module.css'
-import FiltroPlataformasPostulaciones from '../../../components/layout/FiltroPlataformasPostulaciones/FiltroPlataformasPostulaciones.jsx'
-import JobsTable from '../../../components/layout/JobsTable/JobsTable.jsx'
-import FormularioCreacionTrabajos from '../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
-import { getJobsByPlatform } from '../../../services/jobsServices.js'
-import { getAllJobStates } from '../../../services/jobStatesServices.js'
+import FiltroPlataformasPostulaciones from '../../../../../components/layout/FiltroPlataformasPostulaciones/FiltroPlataformasPostulaciones.jsx'
+import JobsTable from '../../../../../components/layout/JobsTable/JobsTable.jsx'
+import FormularioCreacionTrabajos from '../../../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
+import { getJobsByPlatform } from '../../../../../services/jobsServices.js'
+import { getAllJobStates } from '../../../../../services/jobStatesServices.js'
 import axios from 'axios'
 
 const CentroPostulaciones = () => {

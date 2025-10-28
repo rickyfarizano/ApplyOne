@@ -1,20 +1,20 @@
 import './assets/styles/App.css'
 import { Routes, Route } from 'react-router-dom'
-import CentroPostulaciones from './views/Postulaciones/CentroPostulaciones/CentroPostulaciones.jsx'
-import NavBar from './components/layout/NavBar/NavBar.jsx'
+import AppLayout from './views/App/AppLayout/AppLayout.jsx'
+import CentroPostulaciones from './views/App/AppViews/Postulaciones/CentroPostulaciones/CentroPostulaciones.jsx'
 
 function App() {
-
   return (
     <>
-    <main>
-      <NavBar />
-      <div className="container">
-        <Routes>
-          <Route path='/mis-postulaciones/centro-de-postulaciones' element={<CentroPostulaciones />} />
-        </Routes>
-      </div>
-    </main>
+    <Routes>
+      {/* Rutas LandingPage */}
+      <Route path='/'/>
+
+      {/* Rutas App */}
+      <Route element={<AppLayout/>}>
+        <Route path='/app/mis-postulaciones/centro-postulaciones' element={<CentroPostulaciones/>} />
+      </Route>
+    </Routes>
     </>
   )
 }
