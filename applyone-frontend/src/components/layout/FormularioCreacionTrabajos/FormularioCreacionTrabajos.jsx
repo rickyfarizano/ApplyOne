@@ -1,20 +1,19 @@
 import React, { useState } from 'react'
+import { createJob } from '../../../services/jobsServices.js'
 
-// 2. Crear form-data con los valores de los input
 // 3. validar inputs del form
-// 4. enviar form-data a la api
 
-const FormularioCreacionTrabajos = ({platform_states = [], platforms = []}) => {
+const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJobsUpdated}) => {
     const [formData, setFormData] = useState({
-        job_name: "",
+        job_title: "",
         company_name: "",
         salary: "",
         location: "",
         direction: "",
         work_modality_id: "",
+        job_board_id: "1",
         platform_id: "",
         job_state_id: "",
-
     })
 
     /**
@@ -29,18 +28,49 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = []}) => {
         }))
     }
 
+    const submitForm = async (e) => {
+        e.preventDefault()
+        try {
+            const data = new FormData()
+            for(const key in formData) {
+                data.append(key, formData[key])
+            }
+
+            const response = await createJob(data)
+
+            // Indico que los trabajos fueron actualizados
+            setJobsUpdated(true)
+            
+            setFormData({
+                job_title: "",
+                company_name: "",
+                salary: "",
+                location: "",
+                direction: "",
+                work_modality_id: "",
+                job_board_id: "1",
+                platform_id: "",
+                job_state_id: "",
+            })
+
+            // console.log("formulario enviado con éxito", response)
+        }catch(err) {
+            console.error("Error al enviar el formulario", err.message)
+        }
+    }
+
 
   return (
-    <form>
+    <form onSubmit={submitForm}>
         <div className="grupo">
             <fieldset>
-                <label htmlFor="job-name">Nombre del trabajo</label>
+                <label htmlFor="job-title">Nombre del trabajo</label>
                 <input 
                 type="text" 
-                name="job_name" 
-                id="job-name" 
+                name="job_title" 
+                id="job-job-title" 
                 placeholder='E.j: Desarrollador web'
-                value={formData.job_name}
+                value={formData.job_title}
                 onChange={handleChange}
                 />
             </fieldset>
@@ -104,6 +134,7 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = []}) => {
                 id="work_modality_id" 
                 value={formData.work_modality_id} 
                 onChange={handleChange}>
+                    <option value="">Seleccione una opcion</option>
                     <option value="1">Presencial</option>
                     <option value="2">Hibrido</option>
                     <option value="3">Online</option>
@@ -120,6 +151,7 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = []}) => {
                 value={FormData.platform_id}
                 onChange={handleChange}
                 >
+                    <option value="">Seleccione una opcion</option>
                     {
                         platforms.map(platform => (
                             <option 
@@ -140,6 +172,7 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = []}) => {
                 value={formData.job_state_id}
                 onChange={handleChange}
                 >
+                    <option value="">Seleccione una opcion</option>
                     {
                         platform_states.map(platform_state => (
                             <option key={platform_state.id} value={platform_state.id}>{platform_state.state_name}</option>

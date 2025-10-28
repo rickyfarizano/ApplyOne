@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const api = axios.create({
-    baseURL: "http://127.0.0.1:8000",
+    baseURL: "http://127.0.0.1:8000/api",
     headers: {
         'Accept': 'application/json',
     }
@@ -25,7 +25,11 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     response => response,
     error => {
-        console.error("Error al conectar con la api", error.message)
+        if(error.response) {
+            console.error("Error en la api", error.response.data)
+        } else {    
+            console.error("Error al conectar con la pi", error.message)
+        }
         return Promise.reject(error)
     },
 )

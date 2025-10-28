@@ -5,9 +5,9 @@ import JobsTable from '../../../../../components/layout/JobsTable/JobsTable.jsx'
 import FormularioCreacionTrabajos from '../../../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
 import { getJobsByPlatform } from '../../../../../services/jobsServices.js'
 import { getAllJobStates } from '../../../../../services/jobStatesServices.js'
-import axios from 'axios'
 
 const CentroPostulaciones = () => {
+  const [jobsUpdated, setJobsUpdated] = useState(false)
   const [allPlatforms, setAllPlatforms] = useState([])
   const [actualPlatform, setActualPlatform] = useState()
   const [jobs_x_platform, setJobs_x_platform] = useState([])
@@ -16,6 +16,8 @@ const CentroPostulaciones = () => {
 
   useEffect(() => {
     if(!actualPlatform) return;
+    // reinicio setJobsUpdated
+    setJobsUpdated(false)
     const getJobsXplatform = async (actualPlatform) => {
       try {
         if(!allPlatforms.includes(actualPlatform)) {
@@ -31,7 +33,7 @@ const CentroPostulaciones = () => {
       }
     }
     getJobsXplatform(actualPlatform)
-  }, [actualPlatform])
+  }, [actualPlatform, allPlatforms, jobsUpdated])
 
   useEffect(() => {
     const getAllStates = async () => {
@@ -70,6 +72,7 @@ const CentroPostulaciones = () => {
               <FormularioCreacionTrabajos
               platform_states={jobStates}
               platforms={allPlatforms}
+              setJobsUpdated={setJobsUpdated}
               />
             </div>
           </div>
