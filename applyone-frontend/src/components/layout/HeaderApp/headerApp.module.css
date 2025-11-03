@@ -1,0 +1,24 @@
+.header_app {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--complementary-clr);
+}
+
+.header_app .container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px;
+}
+
+.btn_close_session {
+    padding: 8px;
+    background-color: #D41515;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
