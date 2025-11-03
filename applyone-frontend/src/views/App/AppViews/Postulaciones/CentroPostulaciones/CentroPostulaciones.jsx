@@ -53,8 +53,12 @@ const CentroPostulaciones = () => {
     <section className={styles.centro_postulaciones}>
         <div className={styles.container}>
             <div className={styles.titulo_acciones}>
-                <h1 className="titulo">Postulaciones</h1>
-                <a href="">Agregar postulacion</a>
+                <h1 className={styles.title}>Postulaciones</h1>
+                <div className={styles.actions}>
+                  <a className={styles.btn_add_job} href="#">Agregar postulación<i className="add_job_icon fa-solid fa-plus"></i></a>
+                  <a className={styles.sort_by} href="#">Ordenar por</a>
+                  <a className={styles.filters} href="#">Filtros</a>
+                </div>
             </div>
 
           <div className="container_jobs">

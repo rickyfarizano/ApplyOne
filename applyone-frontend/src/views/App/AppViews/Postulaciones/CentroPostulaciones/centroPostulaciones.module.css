@@ -3,10 +3,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 4rem;
 }
 
 .centro_postulaciones .container {
-    max-width: 1300px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -20,4 +20,35 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+}
+
+.titulo {
+    font-family: 'Poppins', 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.actions {
+    width: 45%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.actions a {
+    text-decoration: none;
+    padding: .8rem;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.actions .btn_add_job {
+    background-color: var(--brand-clr-1);
+    color: #ffffff;
+}
+
+.actions .sort_by,
+.actions .filters {
+    background-color: var(--complementary-clr);
+    color: var(--brand-clr-2);
 }

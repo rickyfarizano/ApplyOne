@@ -1,11 +1,18 @@
 :root {
-    --complementary-clr: #F2F2F2
+    --complementary-clr: #F2F2F2;
+    --brand-clr-1: #0040FF;
+    --brand-clr-2: #5E17EB;
 }
 
+/* estilos de iconos de FontAwesome */
 .close_session_icon {
     color: #ffffff;
     font-size: 1.2rem;
     text-decoration: none;
+}
+
+.add_job_icon {
+    color: #ffffff;
 }
 
 * {
