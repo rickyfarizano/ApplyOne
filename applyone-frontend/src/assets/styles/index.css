@@ -5,6 +5,11 @@
     --brand-clr-1-hover: #0734ba;
     --btn-delete: #D41515;
     --btn-delete-hover: #940e0e;
+
+    --estado-contactado: #15C420;
+    --estado-no-contactado: #c40f0f;
+    --estado-en-proceso: #c46d15;
+    --estado-entrevista-concretada: #1515c4;
 }
 
 /* estilos de iconos de FontAwesome */
