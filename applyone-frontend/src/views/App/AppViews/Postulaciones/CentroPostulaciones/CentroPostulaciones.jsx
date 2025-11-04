@@ -62,7 +62,11 @@ const CentroPostulaciones = () => {
             </div>
 
           <div className="container_jobs">
-            <FiltroPlataformasPostulaciones setActualPlatform={setActualPlatform} setAllPlatforms={setAllPlatforms} />
+            <FiltroPlataformasPostulaciones 
+            setActualPlatform={setActualPlatform} 
+            setAllPlatforms={setAllPlatforms} 
+            actualPlatform={actualPlatform}
+            />
             <JobsTable filtered_jobs={jobs_x_platform} />
           </div>
 

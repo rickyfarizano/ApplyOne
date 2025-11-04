@@ -1,0 +1,18 @@
+.filtro_plataformas_postulaciones {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.filtro_plataformas_postulaciones .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--complementary-clr);
+    padding: 10px;
+    border-radius: 10px;
+    gap: .5rem;
+}
+

@@ -3,7 +3,11 @@ import BtnPlatforma from '../../ui/BtnPlataforma/BtnPlatforma.jsx'
 import { getAllPlatforms } from '../../../services/platformsServices.js'
 import styles from './filtroPlataformasPostulaciones.module.css'
 
-const FiltroPlataformasPostulaciones = ({setActualPlatform, setAllPlatforms}) => {
+const FiltroPlataformasPostulaciones = ({
+    setActualPlatform, 
+    setAllPlatforms, 
+    actualPlatform
+}) => {
     const [platforms, setPlatforms] = useState([])
 
     useEffect(() => {
@@ -25,13 +29,14 @@ const FiltroPlataformasPostulaciones = ({setActualPlatform, setAllPlatforms}) =>
     }, [])
   return (
     <>
-    <div className="filtro-plataformas-postulaciones">
-        <div className="container">
+    <div className={styles.filtro_plataformas_postulaciones}>
+        <div className={styles.container}>
             {
                 platforms.map(platform => (
                     <BtnPlatforma
                     setActualPlatform={() => setActualPlatform(platform.platform_name)}
                     platform_name={platform.platform_name} 
+                    actualPlatform={actualPlatform}
                     key={platform.id} />
                 ))
             }
