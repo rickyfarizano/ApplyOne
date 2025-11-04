@@ -1,11 +1,12 @@
 import React from 'react'
-import JobsData from '../JobsData/JobsData'
+import JobsData from '../JobsData/JobsData.jsx'
+import styles from './jobsTable.module.css'
 
 const JobsTable = ({filtered_jobs = []}) => {
   return (
     <>
-    <table className="jobs">
-        <thead>
+    <table className={styles.jobs}>
+        <thead className={styles.thead}>
             <tr>
                 <th>Puesto</th>
                 <th>Empresa</th>
@@ -14,7 +15,7 @@ const JobsTable = ({filtered_jobs = []}) => {
                 <th>Acciones</th>
             </tr>
       </thead>
-      <tbody>
+      <tbody className={styles.tbody}>
         {
             filtered_jobs.length === 0 ? (
                 <tr>

@@ -61,7 +61,7 @@ const CentroPostulaciones = () => {
                 </div>
             </div>
 
-          <div className="container_jobs">
+          <div className={styles.container_jobs}>
             <FiltroPlataformasPostulaciones 
             setActualPlatform={setActualPlatform} 
             setAllPlatforms={setAllPlatforms} 

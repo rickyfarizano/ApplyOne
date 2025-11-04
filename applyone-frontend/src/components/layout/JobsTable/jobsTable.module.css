@@ -1,0 +1,25 @@
+.jobs {
+  width: 100%;
+  margin-top: 1.625rem;
+  text-align: left;
+  /* border-collapse: collapse; */
+  border-collapse: separate; /* separa las filas */
+  border-spacing: 0 20px;
+}
+
+.thead th {
+  padding: 12px;
+  font-weight: 600;
+}
+
+.thead tr th {
+  font-family: 'Poppins', 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+.tbody td {
+  padding: 12px;
+  font-family: 'Poppins', 'Montserrat', sans-serif;
+  font-weight: 300;
+}
+

@@ -1,0 +1,12 @@
+.job_item {
+  background-color: var(--complementary-clr);
+  box-shadow: 6px 4px 5px 0px rgba(0, 64, 255, 0.219);
+}
+
+.job_item td {
+  padding: 10px;
+}
+
+.job_item .job_title_field {
+  border-radius: 10px 0 0 10px;
+}

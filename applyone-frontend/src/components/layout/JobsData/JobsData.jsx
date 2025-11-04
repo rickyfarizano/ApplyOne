@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './jobsData.module.css'
 import { NavLink } from 'react-router-dom' 
 
 const JobsData = ({
@@ -10,11 +11,11 @@ const JobsData = ({
 }) => {
   return (
     <>
-    <tr id={job_id}>
-        <td>{job_title}</td>
-        <td>{company_name}</td>
-        <td>{start_date}</td>
-        <td>{job_state}</td>
+    <tr id={job_id} className={styles.job_item}>
+        <td className={styles.job_title_field}>{job_title}</td>
+        <td className='company_name_field'>{company_name}</td>
+        <td className='date_field'>{start_date}</td>
+        <td className='state_field'>{job_state}</td>
         <td className='btns'>
             <NavLink>Editar</NavLink>
             <NavLink>Eliminar</NavLink>
