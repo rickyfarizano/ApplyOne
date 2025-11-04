@@ -2,6 +2,9 @@
     --complementary-clr: #F2F2F2;
     --brand-clr-1: #0040FF;
     --brand-clr-2: #5E17EB;
+    --brand-clr-1-hover: #0734ba;
+    --btn-delete: #D41515;
+    --btn-delete-hover: #940e0e;
 }
 
 /* estilos de iconos de FontAwesome */
@@ -40,5 +43,4 @@ main .container {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    padding: 1rem;
 }

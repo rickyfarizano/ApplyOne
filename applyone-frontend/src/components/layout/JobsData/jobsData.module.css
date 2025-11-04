@@ -10,3 +10,44 @@
 .job_item .job_title_field {
   border-radius: 10px 0 0 10px;
 }
+
+.btn_edit,
+.btn_delete {
+  padding: 5px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn_edit {
+  background-color: var(--brand-clr-1);
+  transition: .2s all ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn_delete {
+  background-color: var(--btn-delete);
+  transition: .2s all ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn_delete:hover {
+  background-color: var(--btn-delete-hover);
+  cursor: pointer;
+}
+
+.btn_edit:hover {
+  background-color: var(--brand-clr-1-hover);
+  cursor: pointer;
+}
+
+.btns {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  gap: 1rem;
+}

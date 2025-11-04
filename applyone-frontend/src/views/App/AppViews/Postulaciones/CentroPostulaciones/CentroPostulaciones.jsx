@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './centroPostulaciones.module.css'
+import SortIcon from '../../../../../assets/icons/sort-icon.png'
+import FiltersIcon from '../../../../../assets/icons/filters-icon.png'
 import FiltroPlataformasPostulaciones from '../../../../../components/layout/FiltroPlataformasPostulaciones/FiltroPlataformasPostulaciones.jsx'
 import JobsTable from '../../../../../components/layout/JobsTable/JobsTable.jsx'
 import FormularioCreacionTrabajos from '../../../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
@@ -56,8 +58,8 @@ const CentroPostulaciones = () => {
                 <h1 className={styles.title}>Postulaciones</h1>
                 <div className={styles.actions}>
                   <a className={styles.btn_add_job} href="#">Agregar postulación<i className="add_job_icon fa-solid fa-plus"></i></a>
-                  <a className={styles.sort_by} href="#">Ordenar por</a>
-                  <a className={styles.filters} href="#">Filtros</a>
+                  <a className={styles.sort_by} href="#">Ordenar por <img src={SortIcon} alt="ordenar por" /></a>
+                  <a className={styles.filters} href="#">Filtros <img src={FiltersIcon} alt="filtrar por" /></a>
                 </div>
             </div>
 
