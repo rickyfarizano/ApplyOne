@@ -40,4 +40,6 @@ Route::middleware([AllowAllCors::class])->group(function(){
     Route::post('/job-states/create-job-state', [App\Http\Controllers\JobStatesController::class, 'createJobState']);
     Route::put('/job-states/edit-job-state/{id}', [App\Http\Controllers\JobStatesController::class, 'editJobState']);
     Route::delete('job-states/delete-job-state/{id}', [App\Http\Controllers\JobStatesController::class, 'deleteJobState']);
+
+    Route::post('/users/register-user', [App\Http\Controllers\UserController::class, 'registerUser']);
 });
