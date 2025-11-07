@@ -32,3 +32,7 @@ Route::delete('/job-states/delete-job-state/{id}', [App\Http\Controllers\JobStat
 
 // USERS
 Route::post('/users/register-user', [App\Http\Controllers\UserController::class, 'registerUser']);
+
+// PLATFORMS FOR SCRAPPING ACTIONS
+Route::post('/linked-platforms/register-platform', [App\Http\Controllers\UserPlatformsDataController::class, 'registerPlatform']);
+
