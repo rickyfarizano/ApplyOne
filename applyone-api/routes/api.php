@@ -36,4 +36,4 @@ Route::post('/users/register-user', [App\Http\Controllers\UserController::class,
 // PLATFORMS FOR SCRAPPING ACTIONS
 Route::post('/linked-platforms/register-platform', [App\Http\Controllers\UserPlatformsDataController::class, 'registerPlatform']);
 Route::patch('/linked-platforms/edit-platform/{id}', [App\Http\Controllers\UserPlatformsDataController::class, 'editLinkedPlatform']);
-
+Route::delete('/linked-platforms/delete-platform/{id}', [App\Http\Controllers\UserPlatformsDataController::class, 'deleteLinkedPlatform']);

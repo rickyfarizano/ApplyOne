@@ -50,8 +50,8 @@ class UserPlatformsDataController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'plataforma registrada exitosamente!',
-            'linked platform' => $linkedPlatform
+            'message' => 'plataforma vinculada registrada exitosamente!',
+            'linked_platform' => $linkedPlatform
         ]);
     }
 
@@ -97,8 +97,21 @@ class UserPlatformsDataController extends Controller
         $linkedPlatform->update($validateData);
 
         return response()->json([
-            'message' => 'plataforma actualizada exitosamente!',
-            'job_state' => $linkedPlatform
+            'message' => 'plataforma vinculada actualizada exitosamente!',
+            'linked_platform' => $linkedPlatform
+        ]);
+    }
+
+    /**
+     * Permite eliminar una plataforma vinculada
+     */
+    public function deleteLinkedPlatform($id) {
+        $linkedPlatform = UserPlatformsData::findOrFail($id);
+        // dd($linkedPlatform);
+        $linkedPlatform->delete();
+        return response()->json([
+            'message' => 'plataforma vinculada eliminada exitosamente!',
+            'linked_platform' => $linkedPlatform
         ]);
     }
 }
