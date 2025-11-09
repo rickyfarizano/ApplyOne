@@ -31,4 +31,11 @@ Route::put('/job-states/edit-job-state/{id}', [App\Http\Controllers\JobStatesCon
 Route::delete('/job-states/delete-job-state/{id}', [App\Http\Controllers\JobStatesController::class, 'deleteJobState']);
 
 // USERS
+Route::get('/users/get-user-with-platforms/{id}', [App\Http\Controllers\UserController::class, 'getUserWithPlatforms']);
 Route::post('/users/register-user', [App\Http\Controllers\UserController::class, 'registerUser']);
+
+// PLATFORMS FOR SCRAPPING ACTIONS
+Route::get('/linked-platforms/get-platform-by-name/{user_id}/{platform_name}', [App\Http\Controllers\UserPlatformsDataController::class, 'getUserPlatformWithName']);
+Route::post('/linked-platforms/register-platform', [App\Http\Controllers\UserPlatformsDataController::class, 'registerPlatform']);
+Route::patch('/linked-platforms/edit-platform/{id}', [App\Http\Controllers\UserPlatformsDataController::class, 'editLinkedPlatform']);
+Route::delete('/linked-platforms/delete-platform/{id}', [App\Http\Controllers\UserPlatformsDataController::class, 'deleteLinkedPlatform']);

@@ -48,6 +48,6 @@ class User extends Authenticatable
 
     public function platformsData()
     {
-        return $this->hasOne(UserPlatformData::class);
+        return $this->hasMany(UserPlatformsData::class);
     }
 }

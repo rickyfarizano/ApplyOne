@@ -43,4 +43,23 @@ class UserController extends Controller
             'user' => $user,
         ]);
     }
+
+    /**
+     * Permite obtener un usuario junto con todas sus plataformas vinculadas
+     */
+    public function getUserWithPlatforms($id)
+    {
+        $user = User::with('platformsData')->find($id);
+
+        if(!$user) {
+            return response()->json([
+                'message' => 'Usuario no encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'usuario encontrado exitosamente!',
+            'user' => $user
+        ], 200);
+    }
 }
