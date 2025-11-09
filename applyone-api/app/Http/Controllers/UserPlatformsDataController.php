@@ -10,6 +10,29 @@ use App\Models\UserPlatformsData;
 class UserPlatformsDataController extends Controller
 {
     /**
+     * Permite obtener una plataforma vinculada en base al id de un usuario y el nombre de
+     * la plataforma buscada en cuestion
+     */
+    public function getUserPlatformWithName($userId, $platformName)
+    {
+        // tengo que obtener un usuario y de ese usuario obtener una plataforma por su nombre
+        $platform = UserPlatformsData::where('user_id', $userId)
+        ->where('platform_name', $platformName)
+        ->first();
+
+        if(!$platform) {
+            return response()->json([
+                'message' => 'Plataforma no encontrada'
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Plataforma encontrada exitosamente',
+            'platform' => $platform
+        ]);
+    }
+
+    /**
      * Permite al usuairo registrar nuevas plataformas para su posterir scrapping
      */
     public function registerPlatform(Request $request)
