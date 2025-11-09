@@ -36,6 +36,7 @@ Route::post('/users/register-user', [App\Http\Controllers\UserController::class,
 
 // PLATFORMS FOR SCRAPPING ACTIONS
 Route::get('/linked-platforms/get-platform-by-name/{user_id}/{platform_name}', [App\Http\Controllers\UserPlatformsDataController::class, 'getUserPlatformWithName']);
+Route::get('/linked-platforms/get-password/{user_id}/{platform_name}', [App\Http\Controllers\UserPlatformsDataController::class, 'decryptPlatformPassword']);
 Route::post('/linked-platforms/register-platform', [App\Http\Controllers\UserPlatformsDataController::class, 'registerPlatform']);
 Route::patch('/linked-platforms/edit-platform/{id}', [App\Http\Controllers\UserPlatformsDataController::class, 'editLinkedPlatform']);
 Route::delete('/linked-platforms/delete-platform/{id}', [App\Http\Controllers\UserPlatformsDataController::class, 'deleteLinkedPlatform']);
