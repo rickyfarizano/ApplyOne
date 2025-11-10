@@ -98,7 +98,7 @@ class UserPlatformsDataController extends Controller
             'user_id' => $validateData['user_id'],
             'platform_name' => $validateData['platform_name'],
             'platform_link' => $validateData['platform_link'],
-            'platform_username' => $validateData['platform_name'],
+            'platform_username' => $validateData['platform_username'],
             'platform_password' => Crypt::encryptString($validateData['platform_password']),
         ]);
 
