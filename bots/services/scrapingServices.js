@@ -1,6 +1,6 @@
-import dotenv from 'dotenv'
 import axios from 'axios'
 import puppeteer from 'puppeteer'
+import FormData from 'form-data'
 import { puppeteerConfig } from '../config/puppeteerConfig.js'
 
 export const scrapPlatformService = async (userId, platformName) => {
@@ -78,35 +78,39 @@ export const scrapPlatformService = async (userId, platformName) => {
         // EXTRACCIÓN DE INFORMACIÓN
         // ---------------------------
 
-        // Título del trabajo
         const job_title = box.querySelector('h1.fs18.fwB.mAll0')?.innerText?.trim() || null
-
-        // Nombre de la empresa
         const company_name = box.querySelector('p.fs16.fc_base.mt5.dIB_m')?.innerText?.trim() || null
-
-        // Ubicación
         const location = box.querySelector('p.fs16.fc_base.dIB_m')?.innerText?.trim() || null
-
-        // Descripción breve o estado ("Postulado", "En proceso", etc.)
-        const job_description = box.querySelector('p.fc_link.fs16.fwB.dIB_m')?.innerText?.trim() || null
-
-        // Información auxiliar (usamos este campo como salary provisional)
-        const salary = box.querySelector('p.fc_aux.fs13.dIB_m')?.innerText?.trim() || null
-
-        // Link a la oferta (data-shortcut-see-offer)
-        const direction = box.querySelector('[data-shortcut-see-offer]')?.getAttribute('data-shortcut-see-offer') || null
-
-        // Nombre de la plataforma (fijo)
-        const platform_name = 'Computrabajo'
 
         // Modalidad del trabajo
         let work_modality_id = 1 // valor por defecto: presencial
-        const lowerTitle = (job_title || '').toLowerCase()
-        const lowerDesc = (job_description || '').toLowerCase()
+        let job_board_id = 1 // board por defecto
+        const platform_id = 1 // plataforma Computrabajo
 
-        if (lowerTitle.includes('remoto') || lowerDesc.includes('remoto') || lowerTitle.includes('home office')) {
+        // Estado de la postulación
+        let job_state = box.querySelector('.fc_link.fs16.fwB.dIB_m')?.innerText?.trim() || null
+        let job_state_id = null
+
+        switch (job_state) {
+          case "Postulado":
+            job_state_id = 1
+            break
+          case "CV Visto":
+            job_state_id = 2
+            break
+          case "En proceso":
+            job_state_id = 3
+            break
+          case "Finalista":
+            job_state_id = 4
+            break
+        }
+
+        const lowerTitle = (job_title || '').toLowerCase()
+
+        if (lowerTitle.includes('remoto') || lowerTitle.includes('home office')) {
           work_modality_id = 3 // online
-        } else if (lowerTitle.includes('híbrido') || lowerDesc.includes('híbrido')) {
+        } else if (lowerTitle.includes('híbrido')) {
           work_modality_id = 2 // híbrido
         }
 
@@ -116,12 +120,11 @@ export const scrapPlatformService = async (userId, platformName) => {
         results.push({
           job_title: job_title || null,
           company_name: company_name || null,
-          job_description: job_description || null,
-          salary: salary || null,
           location: location || null,
-          direction: direction || null,
           work_modality_id: work_modality_id || 1,
-          platform_name: platform_name || 'Computrabajo'
+          job_board_id: job_board_id,
+          platform_id: platform_id,
+          job_state_id: job_state_id || null
         })
       })
 
@@ -129,13 +132,41 @@ export const scrapPlatformService = async (userId, platformName) => {
     })
 
     // =====================================
-    // 6️⃣ Mostrar resultado final
+    // Mostrar resultado final
     // =====================================
     console.log("📦 Postulaciones obtenidas:")
     console.log(JSON.stringify(postulaciones, null, 2))
 
-    // await browser.close()
-    return postulaciones
+    // =====================================
+    // Registrar postulaciones en la BDD
+    // =====================================
+    console.log("🗂️ Enviando postulaciones al servidor...")
+
+    for (const job of postulaciones) {
+      try {
+        const formData = new FormData()
+        formData.append('job_title', job.job_title)
+        formData.append('company_name', job.company_name)
+        formData.append('location', job.location)
+        formData.append('work_modality_id', job.work_modality_id)
+        formData.append('job_board_id', job.job_board_id)
+        formData.append('platform_id', job.platform_id)
+        formData.append('job_state_id', job.job_state_id)
+
+        const response = await axios.post(
+          `${process.env.API_URL}jobs/create-job`,
+          formData,
+          { headers: formData.getHeaders() }
+        )
+
+        console.log(`== Job registrado correctamente: ${job.job_title}`)
+      } catch (error) {
+        console.error(`❌ Error al registrar ${job.job_title}:`, error.message)
+      }
+    }
+
+    console.log("🎯 Proceso finalizado correctamente.")
+    await browser.close()
 
   } catch (err) {
     console.error("❌ Error al hacer scrapping de la plataforma:", err.message)
