@@ -15,7 +15,7 @@ class JobsController extends Controller
     {
         $jobs = Job::with([
             'jobState:id,state_name',
-            'platforms:id,platform_name,platform_url'
+            'user_platforms_data:id, user_id, platform_name, _platform_link, platform_username, platform_password'
         ])->get();
 
         // dd($jobs);
@@ -31,7 +31,7 @@ class JobsController extends Controller
     {
         $job = Job::with([
             'jobState:id,state_name',
-            'platforms:id,platform_name,platform_url'
+            'user_platforms_data:id, user_id, platform_name, _platform_link, platform_username, platform_password'
         ])->findOrFail($id);
 
         if(!$job) {
@@ -52,7 +52,7 @@ class JobsController extends Controller
     {
         $jobs = Job::with([
             'jobState:id,state_name',
-            'platforms:id,platform_name,platform_url'
+            'user_platforms_data:id, user_id, platform_name, _platform_link, platform_username, platform_password'
         ])
         ->whereHas('platforms', function($query) use ($platformName) {
             $query->where('platform_name', $platformName);
@@ -73,12 +73,10 @@ class JobsController extends Controller
         $validatedData = $request->validate([
             'job_title' => 'required|string|max:255',
             'company_name' => 'required|string|max:255',
-            'salary' => 'nullable|numeric',
-            'location' => 'nullable|string|max:150',
             'direction' => 'nullable|string|max:255',
             'work_modality_id' => 'nullable|integer|exists:work_modalities,id',
             'job_board_id' => 'nullable|integer',
-            'platform_id' => 'nullable|integer|exists:platforms,id',
+            'linked_platform_id' => 'nullable|integer|exists:platforms,id',
             'application_start_date' => 'nullable|date',
             'application_end_date' => 'nullable|date',
             'job_state_id' => 'nullable|integer|exists:job_states,id',
@@ -91,21 +89,16 @@ class JobsController extends Controller
             'company_name.string' => 'El nombre de la empresa debe ser una cadena de texto.',
             'company_name.max' => 'El nombre de la empresa no puede superar los 255 caracteres.',
 
-            'salary.numeric' => 'El salario debe ser un valor numérico.',
-
             'location.string' => 'La ubicación debe ser una cadena de texto.',
             'location.max' => 'La ubicación no puede superar los 150 caracteres.',
-
-            'direction.string' => 'La dirección debe ser una cadena de texto.',
-            'direction.max' => 'La dirección no puede superar los 255 caracteres.',
 
             'work_modality_id.integer' => 'La modalidad de trabajo debe ser un número entero.',
             'work_modality_id.exists' => 'La modalidad de trabajo seleccionada no existe.',
 
             'job_board_id.integer' => 'El ID del portal de empleo debe ser un número entero.',
 
-            'platform_id.integer' => 'La plataforma debe ser un número entero.',
-            'platform_id.exists' => 'La plataforma seleccionada no existe.',
+            'linked_platform_id.integer' => 'La plataforma debe ser un número entero.',
+            'linked_platform_id.exists' => 'La plataforma seleccionada no existe.',
 
             'application_start_date.date' => 'La fecha de inicio de la postulación debe ser una fecha válida.',
             'application_end_date.date' => 'La fecha de fin de la postulación debe ser una fecha válida.',
@@ -135,9 +128,7 @@ class JobsController extends Controller
         $validatedData = $request->validate([
             'job_title' => 'required|string|max:255',
             'company_name' => 'required|string|max:255',
-            'salary' => 'nullable|numeric',
             'location' => 'nullable|string|max:150',
-            'direction' => 'nullable|string|max:255',
             'work_modality_id' => 'nullable|integer|exists:work_modalities,id',
             'job_board_id' => 'nullable|integer',
             'platform_id' => 'nullable|integer|exists:platforms,id',
@@ -153,21 +144,17 @@ class JobsController extends Controller
             'company_name.string' => 'El nombre de la empresa debe ser una cadena de texto.',
             'company_name.max' => 'El nombre de la empresa no puede superar los 255 caracteres.',
 
-            'salary.numeric' => 'El salario debe ser un valor numérico.',
 
             'location.string' => 'La ubicación debe ser una cadena de texto.',
             'location.max' => 'La ubicación no puede superar los 150 caracteres.',
-
-            'direction.string' => 'La dirección debe ser una cadena de texto.',
-            'direction.max' => 'La dirección no puede superar los 255 caracteres.',
 
             'work_modality_id.integer' => 'La modalidad de trabajo debe ser un número entero.',
             'work_modality_id.exists' => 'La modalidad de trabajo seleccionada no existe.',
 
             'job_board_id.integer' => 'El ID del portal de empleo debe ser un número entero.',
 
-            'platform_id.integer' => 'La plataforma debe ser un número entero.',
-            'platform_id.exists' => 'La plataforma seleccionada no existe.',
+            'linked_platform_id.integer' => 'La plataforma debe ser un número entero.',
+            'linked_platform_id.exists' => 'La plataforma seleccionada no existe.',
 
             'application_start_date.date' => 'La fecha de inicio de la postulación debe ser una fecha válida.',
             'application_end_date.date' => 'La fecha de fin de la postulación debe ser una fecha válida.',
