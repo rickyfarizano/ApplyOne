@@ -16,7 +16,7 @@ class Job extends Model
         'location',
         'work_modality_id',
         'job_board_id',
-        'platform_id',
+        'linked_platform_id',
         'application_start_date',
         'application_end_date',
         'job_state_id'
@@ -32,5 +32,10 @@ class Job extends Model
     public function workModality()
     {
         return $this->belongsTo(workModality::class, 'work_modality_id');
+    }
+
+    public function linkedPlatforms()
+    {
+        return $this->belongsTo(UserPlatformsData::class, 'linked_platform_id');
     }
 }
