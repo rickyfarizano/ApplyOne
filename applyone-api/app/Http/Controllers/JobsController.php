@@ -15,7 +15,7 @@ class JobsController extends Controller
     {
         $jobs = Job::with([
             'jobState:id,state_name',
-            'user_platforms_data:id, user_id, platform_name, _platform_link, platform_username, platform_password'
+            'linkedPlatform:id,user_id,platform_name,platform_link,platform_username,platform_password'
         ])->get();
 
         // dd($jobs);
@@ -31,7 +31,7 @@ class JobsController extends Controller
     {
         $job = Job::with([
             'jobState:id,state_name',
-            'user_platforms_data:id, user_id, platform_name, _platform_link, platform_username, platform_password'
+            'linkedPlatform:id,user_id,platform_name,platform_link,platform_username,platform_password'
         ])->findOrFail($id);
 
         if(!$job) {
@@ -52,9 +52,9 @@ class JobsController extends Controller
     {
         $jobs = Job::with([
             'jobState:id,state_name',
-            'user_platforms_data:id, user_id, platform_name, _platform_link, platform_username, platform_password'
+            'linkedPlatform:id,user_id,platform_name,platform_link,platform_username,platform_password'
         ])
-        ->whereHas('platforms', function($query) use ($platformName) {
+        ->whereHas('linkedPlatform', function($query) use ($platformName) {
             $query->where('platform_name', $platformName);
         })
         ->get();
@@ -76,7 +76,7 @@ class JobsController extends Controller
             'direction' => 'nullable|string|max:255',
             'work_modality_id' => 'nullable|integer|exists:work_modalities,id',
             'job_board_id' => 'nullable|integer',
-            'linked_platform_id' => 'nullable|integer|exists:platforms,id',
+            'linked_platform_id' => 'nullable|integer|exists:user_platforms_data,id',
             'application_start_date' => 'nullable|date',
             'application_end_date' => 'nullable|date',
             'job_state_id' => 'nullable|integer|exists:job_states,id',
@@ -111,7 +111,7 @@ class JobsController extends Controller
 
         return response()->json([
             'message' => 'trabajo creado exitosamente!',
-            'job' => $job->load(['jobState', 'workModality', 'platforms'])
+            'job' => $job->load(['jobState', 'workModality', 'linkedPlatform'])
         ]);
     }
 
@@ -126,24 +126,21 @@ class JobsController extends Controller
         // dd($job);
 
         $validatedData = $request->validate([
-            'job_title' => 'required|string|max:255',
-            'company_name' => 'required|string|max:255',
+            'job_title' => 'string|max:255',
+            'company_name' => 'string|max:255',
             'location' => 'nullable|string|max:150',
             'work_modality_id' => 'nullable|integer|exists:work_modalities,id',
             'job_board_id' => 'nullable|integer',
-            'platform_id' => 'nullable|integer|exists:platforms,id',
+            'linked_platform_id' => 'nullable|integer|exists:user_platforms_data,id',
             'application_start_date' => 'nullable|date',
             'application_end_date' => 'nullable|date',
             'job_state_id' => 'nullable|integer|exists:job_states,id',
         ], [
-            'job_title.required' => 'El título del trabajo es obligatorio.',
             'job_title.string' => 'El título del trabajo debe ser una cadena de texto.',
             'job_title.max' => 'El título del trabajo no puede superar los 255 caracteres.',
 
-            'company_name.required' => 'El nombre de la empresa es obligatorio.',
             'company_name.string' => 'El nombre de la empresa debe ser una cadena de texto.',
             'company_name.max' => 'El nombre de la empresa no puede superar los 255 caracteres.',
-
 
             'location.string' => 'La ubicación debe ser una cadena de texto.',
             'location.max' => 'La ubicación no puede superar los 150 caracteres.',
@@ -164,10 +161,11 @@ class JobsController extends Controller
         ]);
 
         $job->update($validatedData);
+        $job = $job->load(['jobState', 'workModality', 'linkedPlatform']);
 
         return response()->json([
             'message' => 'trabajo editado con exito!',
-            'job' => $job->load(['jobState', 'workModality', 'platforms'])
+            'job' => $job
         ]);
     }
 

@@ -34,7 +34,7 @@ class Job extends Model
         return $this->belongsTo(workModality::class, 'work_modality_id');
     }
 
-    public function linkedPlatforms()
+    public function linkedPlatform()
     {
         return $this->belongsTo(UserPlatformsData::class, 'linked_platform_id');
     }
