@@ -13,12 +13,10 @@ class Job extends Model
     protected $fillable = [
         'job_title',
         'company_name',
-        'salary',
         'location',
-        'direction',
         'work_modality_id',
         'job_board_id',
-        'platform_id',
+        'linked_platform_id',
         'application_start_date',
         'application_end_date',
         'job_state_id'
@@ -36,9 +34,8 @@ class Job extends Model
         return $this->belongsTo(workModality::class, 'work_modality_id');
     }
 
-    // Relacion uno a muchos con platforms
-    public function platforms()
+    public function linkedPlatforms()
     {
-        return $this->belongsTo(Platforms::class, 'platform_id');
+        return $this->belongsTo(UserPlatformsData::class, 'linked_platform_id');
     }
 }

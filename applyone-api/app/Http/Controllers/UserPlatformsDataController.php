@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\UserPlatformsData;
 
 class UserPlatformsDataController extends Controller
@@ -30,6 +30,36 @@ class UserPlatformsDataController extends Controller
             'message' => 'Plataforma encontrada exitosamente',
             'platform' => $platform
         ]);
+    }
+
+    /**
+     * Permite obtener la contraseña desencriptada de una plataforma en concreto
+     */
+    public function decryptPlatformPassword($userId, $platformName)
+    {
+        $platform = UserPlatformsData::where('user_id', $userId)
+        ->where('platform_name', $platformName)
+        ->first();
+
+        if(!$platform) {
+            return response()->json([
+                'message' => 'Plataforma no encontrada'
+            ], 404);
+        }
+
+        try {
+            $decryptedPassword = Crypt::decryptString($platform->platform_password);
+            return response()->json([
+                'message' => 'contraseña desencriptada exitosamente!',
+                'platform_password' => $decryptedPassword
+            ], 200);
+        } catch (\Exception $e) {
+            // Si ocurre algún error al desencriptar
+            return response()->json([
+                'error' => 'No se pudo desencriptar la contraseña.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -68,8 +98,8 @@ class UserPlatformsDataController extends Controller
             'user_id' => $validateData['user_id'],
             'platform_name' => $validateData['platform_name'],
             'platform_link' => $validateData['platform_link'],
-            'platform_username' => $validateData['platform_name'],
-            'platform_password' => Hash::make($validateData['platform_password']),
+            'platform_username' => $validateData['platform_username'],
+            'platform_password' => Crypt::encryptString($validateData['platform_password']),
         ]);
 
         return response()->json([
@@ -112,7 +142,7 @@ class UserPlatformsDataController extends Controller
         ]);
 
         if (!empty($validateData['platform_password'])) {
-            $validateData['platform_password'] = Hash::make($validateData['platform_password']);
+            $validateData['platform_password'] = Crypt::encryptString($validateData['platform_password']);
         } else {
             unset($validateData['platform_password']);
         }

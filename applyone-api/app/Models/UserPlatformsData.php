@@ -21,4 +21,9 @@ class UserPlatformsData extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class, 'linked_platform_id');
+    }
 }

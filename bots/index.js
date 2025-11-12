@@ -1,31 +1,19 @@
 import dotenv from "dotenv"
-import { getUsers, sendJobs } from "./services/apiService.js"
-import { scrapeComputrabajo } from "./scrapers/computrabajo.js"
-
+import express from 'express'
+import { scraperController } from "./controllers/scrapingController.js";
 dotenv.config()
 
-const runScraping = async () => {
-  console.log("Iniciando scraping de Computrabajo...")
+const app = express();
+app.use(express.json())
 
-  try {
-    const users = await getUsers()
 
-    for (const user of users) {
-      if (user.platform.toLowerCase() !== "computrabajo") continue
 
-      console.log(`Scrapeando trabajos para ${user.username}...`)
-      const jobs = await scrapeComputrabajo(user)
+// PASOS PARA HACER EL SCRAPING:
+// 1. Obtener la plataforma que se quiere scrappear y extraer sus credenciales y url haciendo una peticion a la api de backend
+// 2. pasarle al scrapper los recursos y credenciales obtenidos de esa plataforma
+// 3. utilizar esos recursos con puppeteer para que pueda ingresar a la plataforma en cuestion con las credenciales
 
-      if (jobs.length > 0) {
-        await sendJobs(user.id, jobs)
-        console.log(`${jobs.length} trabajos enviados para ${user.username}`)
-      } else {
-        console.log(`No se encontraron trabajos para ${user.username}`)
-      }
-    }
-  } catch (error) {
-    console.error("Error en el scraping:", error.message)
-  }
-}
+app.get("/", (req, res) => res.status(200).json({welcome: "Bienvenido al scrapper!"}))
+app.get("/scrap-platform/:userId/:platformName", scraperController)
 
-runScraping()
+app.listen(process.env.PORT, () => console.log("scrapper running on: http://127.0.0.1:6000"))
