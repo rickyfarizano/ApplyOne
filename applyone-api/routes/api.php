@@ -17,13 +17,6 @@ Route::patch('/jobs/edit-job/{id}', [App\Http\Controllers\JobsController::class,
 // Ruta de eliminacion de trabajos
 Route::delete('jobs/delete-job/{id}', [App\Http\Controllers\JobsController::class, 'deleteJob']);
 
-// PLATFORMS
-// Rutas de obtencion de plataformas
-Route::get('/platforms/get-all-platforms', [App\Http\Controllers\PlatformsController::class, 'getAllPlatforms']);
-Route::post('/platforms/create-platforms', [App\Http\Controllers\PlatformsController::class, 'createPlatforms']);
-Route::patch('/platforms/edit-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'editPlatforms']);
-Route::delete('/platforms/delete-platforms/{id}', [App\Http\Controllers\PlatformsController::class, 'deletePlatforms']);
-
 // JOB STATES
 Route::get('/job-states/get-all-states', [App\Http\Controllers\JobStatesController::class, 'getAllStates']);
 Route::post('/job-states/create-job-state', [App\Http\Controllers\JobStatesController::class, 'createJobState']);
@@ -34,7 +27,7 @@ Route::delete('/job-states/delete-job-state/{id}', [App\Http\Controllers\JobStat
 Route::get('/users/get-user-with-platforms/{id}', [App\Http\Controllers\UserController::class, 'getUserWithPlatforms']);
 Route::post('/users/register-user', [App\Http\Controllers\UserController::class, 'registerUser']);
 
-// PLATFORMS FOR SCRAPPING ACTIONS
+// LINKED PLATFORMS
 Route::get('/linked-platforms/get-platform-by-name/{user_id}/{platform_name}', [App\Http\Controllers\UserPlatformsDataController::class, 'getUserPlatformWithName']);
 Route::get('/linked-platforms/get-password/{user_id}/{platform_name}', [App\Http\Controllers\UserPlatformsDataController::class, 'decryptPlatformPassword']);
 Route::post('/linked-platforms/register-platform', [App\Http\Controllers\UserPlatformsDataController::class, 'registerPlatform']);

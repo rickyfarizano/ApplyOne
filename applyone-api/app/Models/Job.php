@@ -13,9 +13,7 @@ class Job extends Model
     protected $fillable = [
         'job_title',
         'company_name',
-        'salary',
         'location',
-        'direction',
         'work_modality_id',
         'job_board_id',
         'platform_id',
@@ -34,11 +32,5 @@ class Job extends Model
     public function workModality()
     {
         return $this->belongsTo(workModality::class, 'work_modality_id');
-    }
-
-    // Relacion uno a muchos con platforms
-    public function platforms()
-    {
-        return $this->belongsTo(Platforms::class, 'platform_id');
     }
 }
