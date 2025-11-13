@@ -24,7 +24,8 @@ class JobSeeder extends Seeder
                 'linked_platform_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'job_state_id' => 2
+                'job_state_id' => 2,
+                'user_id' => 1
             ],
             [
                 'id' => 2,
@@ -36,7 +37,8 @@ class JobSeeder extends Seeder
                 'linked_platform_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'job_state_id' => 2
+                'job_state_id' => 2,
+                'user_id' => 1
             ],
             [
                 'id' => 3,
@@ -48,7 +50,8 @@ class JobSeeder extends Seeder
                 'linked_platform_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'job_state_id' => 2
+                'job_state_id' => 2,
+                'user_id' => 1
             ],
             [
                 'id' => 4,
@@ -60,7 +63,8 @@ class JobSeeder extends Seeder
                 'linked_platform_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'job_state_id' => 2
+                'job_state_id' => 2,
+                'user_id' => 1
             ],
         ]);
     }
