@@ -165,6 +165,28 @@ class UserController extends Controller
         return response()->json([
             'usuario editado exitosamente!',
             'user' => $user,
+        ], 200);
+    }
+
+    /**
+     * Permite eliminar un usuario de la base de datos
+     */
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        // dd($user);
+
+        if(!$user) {
+            return response()->json([
+                'el usuario que estas intentando eliminar no existe'
+            ], 404);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'usuario eliminado exitosamente!',
+            'user' => $id
         ]);
     }
 }

@@ -28,6 +28,7 @@ Route::get('/users/get-all-users', [App\Http\Controllers\UserController::class, 
 Route::get('/users/get-user-by-id/{id}', [App\Http\Controllers\UserController::class, 'getUserById']);
 Route::post('/users/register-user', [App\Http\Controllers\UserController::class, 'registerUser']);
 Route::patch('users/edit-user/{id}', [App\Http\Controllers\UserController::class, 'editUserInfo']);
+Route::delete('/users/delete-user/{id}', [App\Http\Controllers\UserController::class, 'deleteUser']);
 
 // LINKED PLATFORMS
 Route::get('/linked-platforms/get-platform-by-name/{user_id}/{platform_name}', [App\Http\Controllers\UserPlatformsDataController::class, 'getUserPlatformWithName']);
