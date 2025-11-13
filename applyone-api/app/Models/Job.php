@@ -19,7 +19,8 @@ class Job extends Model
         'linked_platform_id',
         'application_start_date',
         'application_end_date',
-        'job_state_id'
+        'job_state_id',
+        'user_id'
     ];
 
     // relacion uno a muchos con job_state
@@ -37,5 +38,12 @@ class Job extends Model
     public function linkedPlatform()
     {
         return $this->belongsTo(UserPlatformsData::class, 'linked_platform_id');
+    }
+
+    // le indico al model que un trabajo pertenece a un usuario especifico
+    // dentro de la tabla users
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

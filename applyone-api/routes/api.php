@@ -24,6 +24,7 @@ Route::put('/job-states/edit-job-state/{id}', [App\Http\Controllers\JobStatesCon
 Route::delete('/job-states/delete-job-state/{id}', [App\Http\Controllers\JobStatesController::class, 'deleteJobState']);
 
 // USERS
+Route::get('/users/get-all-users', [App\Http\Controllers\UserController::class, 'getAllUsersWithData']);
 Route::get('/users/get-user-with-platforms/{id}', [App\Http\Controllers\UserController::class, 'getUserWithPlatforms']);
 Route::post('/users/register-user', [App\Http\Controllers\UserController::class, 'registerUser']);
 
