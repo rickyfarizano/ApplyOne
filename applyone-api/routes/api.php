@@ -25,7 +25,7 @@ Route::delete('/job-states/delete-job-state/{id}', [App\Http\Controllers\JobStat
 
 // USERS
 Route::get('/users/get-all-users', [App\Http\Controllers\UserController::class, 'getAllUsersWithData']);
-Route::get('/users/get-user-with-platforms/{id}', [App\Http\Controllers\UserController::class, 'getUserWithPlatforms']);
+Route::get('/users/get-user-by-id/{id}', [App\Http\Controllers\UserController::class, 'getUserById']);
 Route::post('/users/register-user', [App\Http\Controllers\UserController::class, 'registerUser']);
 
 // LINKED PLATFORMS

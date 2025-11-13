@@ -45,11 +45,16 @@ class UserController extends Controller
     }
 
     /**
-     * Permite obtener un usuario junto con todas sus plataformas vinculadas
+     * Permite obtener todos los datos de un usuario especifico
      */
-    public function getUserWithPlatforms($id)
+    public function getUserById($id)
     {
-        $user = User::with('platformsData')->find($id);
+        $user = User::with([
+            'platformsData',
+            'jobs.linkedPlatform',
+            'jobs.jobState',
+            'jobs.workModality'
+        ])->find($id);
 
         if(!$user) {
             return response()->json([
@@ -57,9 +62,30 @@ class UserController extends Controller
             ], 404);
         }
 
+        $groupedJobs = [];
+        foreach ($user->jobs as $job) {
+            $platformName = $job->linkedPlatform->platform_name ?? 'Sin plataforma';
+            $groupedJobs[$platformName][] = [
+                'id' => $job->id,
+                'job_title' => $job->job_title,
+                'company_name' => $job->company_name,
+                'location' => $job->location,
+                'application_start_date' => $job->application_start_date,
+                'application_end_date' => $job->application_end_date,
+                'state' => $job->jobState ? $job->jobState->state_name : null,
+                'modality' => $job->workModality ? $job->workModality->modality_name : null,
+            ];
+        }
+
         return response()->json([
             'message' => 'usuario encontrado exitosamente!',
-            'user' => $user
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'platforms' => $user->platformsData,
+                'jobs_by_platform' => $groupedJobs,
+            ]
         ], 200);
     }
 
