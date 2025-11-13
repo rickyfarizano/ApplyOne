@@ -132,4 +132,39 @@ class UserController extends Controller
         ], 200);
     }
 
+    /**
+     * Permite editar la informacion basica de un usuario
+     */
+    public function editUserInfo(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        // dd($user);
+
+        $validatedData = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|email|max:255|unique:users,email,' . $id,
+            'password' => 'sometimes|string|min:8'
+        ], [
+            'name.string' => 'El nombre debe ser un texto válido.',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres.',
+
+            'email.email' => 'El correo electrónico debe ser válido.',
+            'email.max' => 'El correo electrónico no puede tener más de 255 caracteres.',
+
+            'password.string' => 'La contraseña debe ser un texto válido.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
+        ]);
+
+        if($request->filled('password')) {
+            $validatedData['password'] = Hash::make($request->password);
+        }
+
+        $user->update($validatedData);
+
+        return response()->json([
+            'usuario editado exitosamente!',
+            'user' => $user,
+        ]);
+    }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+use function Symfony\Component\Clock\now;
+
 class UserSeeder extends Seeder
 {
     /**
@@ -18,7 +20,9 @@ class UserSeeder extends Seeder
                 'id' => 1,
                 'name' => 'Ricardo',
                 'email' => 'correo@ejemplo.com',
-                'password' => 'admin'
+                'password' => 'admin',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ]);
     }
