@@ -28,9 +28,8 @@ const CentroPostulaciones = () => {
 
         // utilizo el service para obtener trabajos por una plataforma concreta
         const request = await getJobsByPlatform(actualPlatform);
-        console.log(request)
-        setJobs_x_platform(request);
         // console.log(request)
+        setJobs_x_platform(request);
       } catch (error) {
         console.error("Error al obtener los trabajos", error.message);
       }
