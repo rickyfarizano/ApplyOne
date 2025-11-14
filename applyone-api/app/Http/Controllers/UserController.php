@@ -45,11 +45,16 @@ class UserController extends Controller
     }
 
     /**
-     * Permite obtener un usuario junto con todas sus plataformas vinculadas
+     * Permite obtener todos los datos de un usuario especifico
      */
-    public function getUserWithPlatforms($id)
+    public function getUserById($id)
     {
-        $user = User::with('platformsData')->find($id);
+        $user = User::with([
+            'platformsData',
+            'jobs.linkedPlatform',
+            'jobs.jobState',
+            'jobs.workModality'
+        ])->find($id);
 
         if(!$user) {
             return response()->json([
@@ -57,9 +62,131 @@ class UserController extends Controller
             ], 404);
         }
 
+        $groupedJobs = [];
+        foreach ($user->jobs as $job) {
+            $platformName = $job->linkedPlatform->platform_name ?? 'Sin plataforma';
+            $groupedJobs[$platformName][] = [
+                'id' => $job->id,
+                'job_title' => $job->job_title,
+                'company_name' => $job->company_name,
+                'location' => $job->location,
+                'application_start_date' => $job->application_start_date,
+                'application_end_date' => $job->application_end_date,
+                'state' => $job->jobState ? $job->jobState->state_name : null,
+                'modality' => $job->workModality ? $job->workModality->modality_name : null,
+            ];
+        }
+
         return response()->json([
             'message' => 'usuario encontrado exitosamente!',
-            'user' => $user
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'platforms' => $user->platformsData,
+                'jobs_by_platform' => $groupedJobs,
+            ]
         ], 200);
+    }
+
+    public function getAllUsersWithData()
+    {
+        // Cargar usuarios con sus plataformas y trabajos relacionados
+        $users = \App\Models\User::with([
+            'platformsData',
+            'jobs.linkedPlatform',
+            'jobs.jobState',
+            'jobs.workModality'
+        ])->get();
+
+        // Reestructurar la data para agrupar trabajos por plataforma
+        $users = $users->map(function ($user) {
+            $groupedJobs = [];
+
+            foreach ($user->jobs as $job) {
+                $platformName = $job->linkedPlatform ? $job->linkedPlatform->platform_name : 'Sin plataforma';
+                $groupedJobs[$platformName][] = [
+                    'id' => $job->id,
+                    'job_title' => $job->job_title,
+                    'company_name' => $job->company_name,
+                    'location' => $job->location,
+                    'application_start_date' => $job->application_start_date,
+                    'application_end_date' => $job->application_end_date,
+                    'state' => $job->jobState ? $job->jobState->state_name : null,
+                    'modality' => $job->workModality ? $job->workModality->modality_name : null,
+                ];
+            }
+
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'platforms' => $user->platformsData,
+                'jobs_by_platform' => $groupedJobs,
+            ];
+        });
+
+        return response()->json([
+            'message' => 'Usuarios obtenidos exitosamente',
+            'users' => $users
+        ], 200);
+    }
+
+    /**
+     * Permite editar la informacion basica de un usuario
+     */
+    public function editUserInfo(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        // dd($user);
+
+        $validatedData = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|email|max:255|unique:users,email,' . $id,
+            'password' => 'sometimes|string|min:8'
+        ], [
+            'name.string' => 'El nombre debe ser un texto válido.',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres.',
+
+            'email.email' => 'El correo electrónico debe ser válido.',
+            'email.max' => 'El correo electrónico no puede tener más de 255 caracteres.',
+
+            'password.string' => 'La contraseña debe ser un texto válido.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
+        ]);
+
+        if($request->filled('password')) {
+            $validatedData['password'] = Hash::make($request->password);
+        }
+
+        $user->update($validatedData);
+
+        return response()->json([
+            'usuario editado exitosamente!',
+            'user' => $user,
+        ], 200);
+    }
+
+    /**
+     * Permite eliminar un usuario de la base de datos
+     */
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        // dd($user);
+
+        if(!$user) {
+            return response()->json([
+                'el usuario que estas intentando eliminar no existe'
+            ], 404);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'usuario eliminado exitosamente!',
+            'user' => $id
+        ]);
     }
 }

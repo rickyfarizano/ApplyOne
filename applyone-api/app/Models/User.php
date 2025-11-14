@@ -50,4 +50,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserPlatformsData::class);
     }
+
+    // Le indico al model que users puede tener muchos trabajos
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
 }
