@@ -1,58 +1,61 @@
 import React, { useState } from 'react'
 import { createJob } from '../../../services/jobsServices.js'
-import joi from 'joi'
+import Joi, { optional } from 'joi'
 
-// 3. validar inputs del form
-// TODO parsear el salario antes de que se pushee al form-data
-
-const schema = {
-    job_title: joi.string().min(5).required().messages({
+const schema = Joi.object({
+    job_title: Joi.string().min(5).required().messages({
         'any.required': 'El nombre del trabajo es obligatorio',
         'string.base': 'El titulo del trabajo debe ser un texto',
         'string.empty': 'El nombre del trabajo no puede quedar vacio',
         'string.min': 'El nombre debe tener como minimo 5 caracteres'
     }),
-    company_name: joi.string().min(5).required().messages({
+    company_name: Joi.string().min(5).required().messages({
         'any.required': 'El nombre de la empresa es obligatorio',
         'string.base': 'El nombre de la empresa debe ser un texto',
         'string.empty': 'El nombre de la empresa no puede quedar vacio',
         'string.min': 'El nombre de la empresa tener como minimo 5 caracteres'
     }),
-    salary: joi.number().messages({
-        'number.base': 'El sueldo del trabajo debe ser un numero',
-        'number.integer': 'El sueldo del trabajo debe ser un numero entero'
+    location: Joi.string().optional().allow('').messages({
+        'string.base': 'La ubicacion del trabajo debe ser un texto',
     }),
-    location: joi.string().messages({
-        'string.base': 'La ubicacion del trabajo debe ser un texto'
-    }),
-    direction: joi.string().messages({
-        'string.base': 'La direccion del trabajo debe ser un texto'
-    }),
-    work_modality_id: joi.string().messages({
-        'string.base': 'El id de la modalidad del trabajo debe ser un texto'
+    work_modality_id: Joi.string().required().messages({
+        'any.required': 'la modalidad del trabajo es obligatoria',
+        'string.base': 'El id de la modalidad del trabajo debe ser un texto',
+        'string.empty': 'La modalidad no puede quedar vacia'
     }),
     job_board_id: "1",
-    platform_id: joi.string().messages({
-        'string.base': 'El id de la plataforma del trabajo debe ser un texto'
+    linked_platform_id: Joi.string().required().messages({
+        'any.required': 'La seleccion del tablero es obligatorio',
+        'string.base': 'El id de la plataforma del trabajo debe ser un texto',
+        'string.empty': 'La plataforma es obligatoria'
+        
     }),
-    job_state_id: joi.string().messages({
-        'string.base': 'El estado del trabajo debe ser un texto'
+    job_state_id: Joi.string().required().messages({
+        'any.required': 'El estado del trabajo es olbigatorio',
+        'string.base': 'El estado del trabajo debe ser un texto',
+        'string.empty': 'El estado del trabajo es obligatorio'
     }),
-
-}
+    user_id: Joi.string().required().messages({
+        'any.required': 'el id del usuario es obligatorio',
+        'string.base': 'El id del ususario debe ser un texto',
+        'string.empty': 'El usuario no puede quedar vacio'
+    })
+})
 
 const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJobsUpdated}) => {
     const [formData, setFormData] = useState({
         job_title: "",
         company_name: "",
-        salary: "",
         location: "",
-        direction: "",
         work_modality_id: "",
         job_board_id: "1",
-        platform_id: "",
+        linked_platform_id: "",
         job_state_id: "",
+        user_id: "1"
     })
+
+    const [errors, setErrors] = useState({})
+    const [successMessage, setSuccessMessage] = useState("") 
 
     /**
      * Almacena los valores ingresados en cada input en el momento en el que hay un cambio
@@ -68,32 +71,49 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
 
     const submitForm = async (e) => {
         e.preventDefault()
+        // error = objeto que contiene los errores en Joi
+        // value = objeto que contiene los datos validados y sanitizados por Joi
+        const {error,  value} = schema.validate(formData, {abortEarly: false})
+        setSuccessMessage("")
+
+        const newErrors = {}
+        if(error) {
+            error.details.forEach(detail => {
+                newErrors[detail.path] = detail.message
+            })
+
+            setErrors(newErrors)
+            console.log(`Errores de validacion: ${newErrors}`)
+            return 
+        }
+
+        // limpio los errores viejos
+        setErrors({})
+        
         try {
-            const data = new FormData()
-            for(const key in formData) {
-                data.append(key, formData[key])
+            const formData = new FormData()
+            for(const key in value) {
+                formData.append(key, value[key])
             }
 
-            const response = await createJob(data)
+            const job = await createJob(formData)
 
-            // Indico que los trabajos fueron actualizados
             setJobsUpdated(true)
-            
+
             setFormData({
                 job_title: "",
                 company_name: "",
-                salary: "",
                 location: "",
-                direction: "",
                 work_modality_id: "",
                 job_board_id: "1",
-                platform_id: "",
+                linked_platform_id: "",
                 job_state_id: "",
             })
 
-            // console.log("formulario enviado con éxito", response)
-        }catch(err) {
-            console.error("Error al enviar el formulario", err.message)
+            // console.log(job)
+            setSuccessMessage("Trabajo agregado exitosamente")
+        }catch(error) {
+            console.error("error al enviar intentar crear un trabajo", error.message)
         }
     }
 
@@ -128,18 +148,6 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
 
         <div className="grupo">
             <fieldset>
-                <label htmlFor="salary">Ingrese el sueldo</label>
-                <input 
-                type="number" 
-                name="salary" 
-                id="salary" 
-                placeholder='E.j: 800.000AR$'
-                value={formData.salary}
-                onChange={handleChange}
-                />
-            </fieldset>
-
-            <fieldset>
                 <label htmlFor="location">Ingrese la ubicación</label>
                 <input 
                 type="text" 
@@ -154,18 +162,6 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
 
         <div className="grupo">
             <fieldset>
-                <label htmlFor="salary">Ingrese la dirección</label>
-                <input 
-                type="text" 
-                name="direction" 
-                id="direction" 
-                placeholder='E.j: Luis Viale y Boyaca 1235'
-                value={formData.direction}
-                onChange={handleChange}
-                />
-            </fieldset>
-
-            <fieldset>
                 <label htmlFor="work_modality_id">Seleccione la modalidad de la postulacion</label>
                 <select 
                 name="work_modality_id" 
@@ -178,15 +174,25 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
                     <option value="3">Online</option>
                 </select>
             </fieldset>
+
+            <fieldset>
+                <label htmlFor="job_board">Seleccione el tablero al que pertenece la postulación</label>
+                {/* POR AHORA VA A SER UN INPUT NORMAL, DESPUES SE VA A REEMPLAZAR POR UN SELECT CUANDO ESTEN CREADOS LOS ENDPOINTS DE OBTENCIO DE TABLEROS REGISTRADOS */}
+                <input 
+                type="text" 
+                id='job_board' 
+                name='job_board_id' 
+                placeholder='E.j: Entrevista concretada'  />
+            </fieldset>
         </div>
 
         <div className="grupo">
             <fieldset>
-                <label htmlFor="platform">Seleccione la plataforma a la que pertenece</label>
+                <label htmlFor="linked_platform_id">Seleccione la plataforma a la que pertenece la postulación</label>
                 <select 
-                name="platform_id" 
-                id="platform"
-                value={FormData.platform_id}
+                name="linked_platform_id" 
+                id="linked_platform_id"
+                value={formData.linked_platform_id}
                 onChange={handleChange}
                 >
                     <option value="">Seleccione una opcion</option>
@@ -203,7 +209,7 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
             </fieldset>
 
             <fieldset>
-                <label htmlFor="states">Seleccione el estado en el que se encuentra la postulacion</label>
+                <label htmlFor="states">Seleccione el estado en el que se encuentra la postulación</label>
                 <select 
                 name="job_state_id" 
                 id="states"
@@ -219,6 +225,11 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
                 </select>
             </fieldset>
         </div>
+        {/* POR EL MOMENTO VA A QUEDAR ASI, DESPUES SE VA A TENER QUE AGREGAR
+            EL ID DE FORMA DINAMICA EN BASE AL USUARIO QUE SE ENCUENTRE LOGGUEADO
+            Y AUTENTICADO
+        */}
+        <input type="text" name='user_id' value="1" hidden />
 
         <button type='submit'>Agregar trabajo</button>
     </form>
