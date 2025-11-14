@@ -9,6 +9,17 @@ use App\Models\UserPlatformsData;
 
 class UserPlatformsDataController extends Controller
 {
+    public function getAllLinkedPlatforms()
+    {
+        $platforms = UserPlatformsData::get();
+
+        if(!$platforms) {
+            return response()->json(["No hay plataformas registradas"], 404);
+        }
+
+        return response()->json($platforms, 200);
+    }
+
     /**
      * Permite obtener una plataforma vinculada en base al id de un usuario y el nombre de
      * la plataforma buscada en cuestion

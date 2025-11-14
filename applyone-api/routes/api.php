@@ -31,6 +31,7 @@ Route::patch('users/edit-user/{id}', [App\Http\Controllers\UserController::class
 Route::delete('/users/delete-user/{id}', [App\Http\Controllers\UserController::class, 'deleteUser']);
 
 // LINKED PLATFORMS
+Route::get('/linked-platforms/get-all-linked-platforms', [App\Http\Controllers\UserPlatformsDataController::class, 'getAllLinkedPlatforms']);
 Route::get('/linked-platforms/get-platform-by-name/{user_id}/{platform_name}', [App\Http\Controllers\UserPlatformsDataController::class, 'getUserPlatformWithName']);
 Route::get('/linked-platforms/get-password/{user_id}/{platform_name}', [App\Http\Controllers\UserPlatformsDataController::class, 'decryptPlatformPassword']);
 Route::post('/linked-platforms/register-platform', [App\Http\Controllers\UserPlatformsDataController::class, 'registerPlatform']);

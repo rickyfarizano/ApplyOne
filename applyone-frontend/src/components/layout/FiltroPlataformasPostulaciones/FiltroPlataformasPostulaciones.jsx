@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import BtnPlatforma from '../../ui/BtnPlataforma/BtnPlatforma.jsx'
-import { getAllPlatforms } from '../../../services/platformsServices.js'
+import { getAllLinkedPlatforms } from '../../../services/platformsServices.js'
 import styles from './filtroPlataformasPostulaciones.module.css'
 
 const FiltroPlataformasPostulaciones = ({
@@ -11,11 +11,11 @@ const FiltroPlataformasPostulaciones = ({
     const [platforms, setPlatforms] = useState([])
 
     useEffect(() => {
-        const getPlatforms = async () => {
+        const getLinkedPlatforms = async () => {
             try {
                 // llamo al servicio getAllPlatforms
-                const request = await getAllPlatforms()
-                // console.log(request.data);
+                const request = await getAllLinkedPlatforms()
+                // console.log(request);
                 setPlatforms(request)
                 setAllPlatforms(request);
                 const firstPlatform = request[0]
@@ -25,7 +25,7 @@ const FiltroPlataformasPostulaciones = ({
                 console.error("Error al obtener las plataformas", error.message);
             }
         }
-        getPlatforms()
+        getLinkedPlatforms()
     }, [])
   return (
     <>
