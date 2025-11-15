@@ -9,6 +9,7 @@ const ModalForms = ({children, titleForm}) => {
 
         <div className={styles.container_btn_title}>
           <div className={styles.container_btn}>
+            {/* TODO CREAR COMPONENTE RECICLABLE PARA EL BOTON DE CIERRE PARA HACERLO RECICLABLE A NIVEL GENERAL */}
             <button className={styles.close_modal_btn}><i className={`${styles.close_icon} fa-solid fa-xmark`}></i></button>
           </div>
           <div className={styles.container_title}>

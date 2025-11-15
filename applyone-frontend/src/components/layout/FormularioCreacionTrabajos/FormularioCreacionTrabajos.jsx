@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { createJob } from '../../../services/jobsServices.js'
+import BtnSubmitForm from '../../ui/BtnSubmitForm/BtnSubmitForm.jsx'
 import Joi from 'joi'
 
 const schema = Joi.object({
@@ -42,7 +43,12 @@ const schema = Joi.object({
     })
 })
 
-const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJobsUpdated}) => {
+const FormularioCreacionTrabajos = ({
+    platform_states = [], 
+    platforms = [], 
+    setJobsUpdated,
+    textBtnForm
+}) => {
     const [formData, setFormData] = useState({
         job_title: "",
         company_name: "",
@@ -122,25 +128,27 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
 
 
   return (
-    <form className="add_jobs_form"onSubmit={submitForm}>
+    <form className="action_form"onSubmit={submitForm}>
         <div className="grupo">
-            <fieldset>
-                <label htmlFor="job-title">Nombre del trabajo</label>
+            <fieldset className='fieldset_app'>
+                <label className="general_label" htmlFor="job-title">Nombre del trabajo</label>
                 <input 
                 type="text" 
-                name="job_title" 
-                id="job-job-title" 
+                name="job_title"
+                className='general_input'
+                id="job-title" 
                 placeholder='E.j: Desarrollador web'
                 value={formData.job_title}
                 onChange={handleChange}
                 />
             </fieldset>
 
-            <fieldset>
-                <label htmlFor="company-name">Nombre de la empresa</label>
+            <fieldset className='fieldset_app'>
+                <label className="general_label" htmlFor="company-name">Nombre de la empresa</label>
                 <input 
                 type="text" 
-                name="company_name" 
+                name="company_name"
+                className='general_input'
                 id="company-name" 
                 placeholder='E.j: Google'
                 value={formData.company_name}
@@ -150,11 +158,12 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
         </div>
 
         <div className="grupo">
-            <fieldset>
-                <label htmlFor="location">Ingrese la ubicación</label>
+            <fieldset className='fieldset_app'>
+                <label className="general_label" htmlFor="location">Ingrese la ubicación</label>
                 <input 
-                type="text" 
+                type="text"
                 name="location" 
+                className='general_input'
                 id="location" 
                 placeholder='E.j: Argentina, Buenos Aires'
                 value={formData.location}
@@ -164,68 +173,84 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
         </div>
 
         <div className="grupo">
-            <fieldset>
-                <label htmlFor="work_modality_id">Seleccione la modalidad de la postulacion</label>
-                <select 
-                name="work_modality_id" 
-                id="work_modality_id" 
-                value={formData.work_modality_id} 
-                onChange={handleChange}>
-                    <option value="">Seleccione una opcion</option>
-                    <option value="1">Presencial</option>
-                    <option value="2">Hibrido</option>
-                    <option value="3">Online</option>
-                </select>
+            <fieldset className='fieldset_app'>
+                <label className="general_label" htmlFor="work_modality_id">Seleccione la modalidad de la postulacion</label>
+                <div className="container_select">
+                    <select 
+                    name="work_modality_id"
+                    className='select_app_input'
+                    id="work_modality_id" 
+                    value={formData.work_modality_id} 
+                    onChange={handleChange}>
+                        <option value="">Seleccione una opcion</option>
+                        <option value="1">Presencial</option>
+                        <option value="2">Hibrido</option>
+                        <option value="3">Online</option>
+                    </select>
+
+                    <i class="fa-solid fa-angle-down"></i>
+                </div>
             </fieldset>
 
-            <fieldset>
-                <label htmlFor="job_board">Seleccione el tablero al que pertenece la postulación</label>
+            <fieldset className='fieldset_app'>
+                <label className="general_label" htmlFor="job_board">Seleccione el tablero al que pertenece la postulación</label>
                 {/* POR AHORA VA A SER UN INPUT NORMAL, DESPUES SE VA A REEMPLAZAR POR UN SELECT CUANDO ESTEN CREADOS LOS ENDPOINTS DE OBTENCIO DE TABLEROS REGISTRADOS */}
                 <input 
                 type="text" 
-                id='job_board' 
+                className='general_input'
+                id='job_board'
                 name='job_board_id' 
                 placeholder='E.j: Entrevista concretada'  />
             </fieldset>
         </div>
 
         <div className="grupo">
-            <fieldset>
-                <label htmlFor="linked_platform_id">Seleccione la plataforma a la que pertenece la postulación</label>
-                <select 
-                name="linked_platform_id" 
-                id="linked_platform_id"
-                value={formData.linked_platform_id}
-                onChange={handleChange}
-                >
-                    <option value="">Seleccione una opcion</option>
-                    {
-                        platforms.map(platform => (
-                            <option 
-                            key={platform.id} 
-                            value={platform.id}>
-                            {platform.platform_name}
-                            </option>
-                        ))
-                    }
-                </select>
+            <fieldset className='fieldset_app'>
+                <label className="general_label" htmlFor="linked_platform_id">Seleccione la plataforma de la postulación</label>
+                <div className="container_select">
+                    <select 
+                    name="linked_platform_id" 
+                    id="linked_platform_id"
+                    className='select_app_input'
+                    value={formData.linked_platform_id}
+                    onChange={handleChange}
+                    >
+                        <option value="">Seleccione una opcion</option>
+                        {
+                            platforms.map(platform => (
+                                <option 
+                                key={platform.id} 
+                                value={platform.id}>
+                                {platform.platform_name}
+                                </option>
+                            ))
+                        }
+                    </select>
+
+                    <i class="fa-solid fa-angle-down"></i>
+                </div>
             </fieldset>
 
-            <fieldset>
-                <label htmlFor="states">Seleccione el estado en el que se encuentra la postulación</label>
-                <select 
-                name="job_state_id" 
-                id="states"
-                value={formData.job_state_id}
-                onChange={handleChange}
-                >
-                    <option value="">Seleccione una opcion</option>
-                    {
-                        platform_states.map(platform_state => (
-                            <option key={platform_state.id} value={platform_state.id}>{platform_state.state_name}</option>
-                        ))
-                    }
-                </select>
+            <fieldset className='fieldset_app'>
+                <label className="general_label" htmlFor="job_state_id">Seleccione el estado de la postulación</label>
+                <div className="container_select">
+                    <select 
+                    name="job_state_id" 
+                    id="job_state_id"
+                    className='select_app_input'
+                    value={formData.job_state_id}
+                    onChange={handleChange}
+                    >
+                        <option value="">Seleccione una opcion</option>
+                        {
+                            platform_states.map(platform_state => (
+                                <option key={platform_state.id} value={platform_state.id}>{platform_state.state_name}</option>
+                            ))
+                        }
+                    </select>
+                    
+                    <i class="fa-solid fa-angle-down"></i>
+                </div>
             </fieldset>
         </div>
         {/* 
@@ -234,8 +259,14 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
         Y AUTENTICADO
         */}
         <input type="text" name='user_id' value="1" hidden />
-
-        <button type='submit'>Agregar trabajo</button>
+        {/* componente reutilizable de boton del formulario */}
+        <BtnSubmitForm
+        buttonText="Agregar trabajo"
+        bgColor="#20BF2B"
+        textColor="#ffffff"
+        bgColorHover="#119219"
+        btnType="submit"
+        />
     </form>
   )
 }

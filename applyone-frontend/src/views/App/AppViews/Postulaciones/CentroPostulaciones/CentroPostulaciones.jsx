@@ -79,6 +79,7 @@ const CentroPostulaciones = () => {
             platform_states={jobStates}
             platforms={allPlatforms}
             setJobsUpdated={setJobsUpdated}
+            textBtnForm="Agregar trabajo"
             />
           </ModalForms>
         </div>
