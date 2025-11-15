@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createJob } from '../../../services/jobsServices.js'
 import BtnSubmitForm from '../../ui/BtnSubmitForm/BtnSubmitForm.jsx'
+import ErrorMessage from '../../ui/ErrorMessage/ErrorMessage.jsx'
 import Joi from 'joi'
 
 const schema = Joi.object({
@@ -62,6 +63,7 @@ const FormularioCreacionTrabajos = ({
 
     const [errors, setErrors] = useState({})
     const [successMessage, setSuccessMessage] = useState("") 
+
 
     /**
      * Almacena los valores ingresados en cada input en el momento en el que hay un cambio
@@ -135,12 +137,18 @@ const FormularioCreacionTrabajos = ({
                 <input 
                 type="text" 
                 name="job_title"
-                className='general_input'
+                className={errors.job_title ? 'general_input_error' : 'general_input'}
                 id="job-title" 
                 placeholder='E.j: Desarrollador web'
                 value={formData.job_title}
                 onChange={handleChange}
                 />
+
+                {
+                    errors.job_title && (
+                        <ErrorMessage errorText={errors.job_title} />
+                    )
+                }
             </fieldset>
 
             <fieldset className='fieldset_app'>
@@ -148,12 +156,18 @@ const FormularioCreacionTrabajos = ({
                 <input 
                 type="text" 
                 name="company_name"
-                className='general_input'
+                className={errors.company_name ? 'general_input_error' : 'general_input'}
                 id="company-name" 
                 placeholder='E.j: Google'
                 value={formData.company_name}
                 onChange={handleChange}
                 />
+
+                {
+                    errors.company_name && (
+                        <ErrorMessage errorText={errors.company_name} />
+                    )
+                }
             </fieldset>
         </div>
 
@@ -163,19 +177,25 @@ const FormularioCreacionTrabajos = ({
                 <input 
                 type="text"
                 name="location" 
-                className='general_input'
+                className={errors.location ? 'general_input_error' : 'general_input'}
                 id="location" 
                 placeholder='E.j: Argentina, Buenos Aires'
                 value={formData.location}
                 onChange={handleChange}
                 />
+
+                {
+                    errors.location && (
+                        <ErrorMessage errorText={errors.location} />
+                    )
+                }
             </fieldset>
         </div>
 
         <div className="grupo">
             <fieldset className='fieldset_app'>
                 <label className="general_label" htmlFor="work_modality_id">Seleccione la modalidad de la postulacion</label>
-                <div className="container_select">
+                <div className={errors.work_modality_id  ? 'general_select_error' : 'container_select'}>
                     <select 
                     name="work_modality_id"
                     className='select_app_input'
@@ -190,24 +210,34 @@ const FormularioCreacionTrabajos = ({
 
                     <i class="fa-solid fa-angle-down"></i>
                 </div>
+                {
+                    errors.work_modality_id && (
+                        <ErrorMessage errorText={errors.work_modality_id} />
+                    )
+                }
             </fieldset>
 
             <fieldset className='fieldset_app'>
-                <label className="general_label" htmlFor="job_board">Seleccione el tablero al que pertenece la postulación</label>
+                <label className="general_label" htmlFor="job_board_id">Seleccione el tablero al que pertenece la postulación</label>
                 {/* POR AHORA VA A SER UN INPUT NORMAL, DESPUES SE VA A REEMPLAZAR POR UN SELECT CUANDO ESTEN CREADOS LOS ENDPOINTS DE OBTENCIO DE TABLEROS REGISTRADOS */}
                 <input 
                 type="text" 
                 className='general_input'
-                id='job_board'
+                id='job_board_id'
                 name='job_board_id' 
                 placeholder='E.j: Entrevista concretada'  />
+                {
+                    errors.job_board_id && (
+                        <ErrorMessage errorText={errors.job_board_id} />
+                    )
+                }
             </fieldset>
         </div>
 
         <div className="grupo">
             <fieldset className='fieldset_app'>
                 <label className="general_label" htmlFor="linked_platform_id">Seleccione la plataforma de la postulación</label>
-                <div className="container_select">
+                <div className={errors.linked_platform_id  ? 'general_select_error' : 'container_select'}>
                     <select 
                     name="linked_platform_id" 
                     id="linked_platform_id"
@@ -229,11 +259,16 @@ const FormularioCreacionTrabajos = ({
 
                     <i class="fa-solid fa-angle-down"></i>
                 </div>
+                {
+                    errors.linked_platform_id && (
+                        <ErrorMessage errorText={errors.linked_platform_id} />
+                    )
+                }
             </fieldset>
 
             <fieldset className='fieldset_app'>
                 <label className="general_label" htmlFor="job_state_id">Seleccione el estado de la postulación</label>
-                <div className="container_select">
+                <div className={errors.job_state_id  ? 'general_select_error' : 'container_select'}>
                     <select 
                     name="job_state_id" 
                     id="job_state_id"
@@ -251,6 +286,12 @@ const FormularioCreacionTrabajos = ({
                     
                     <i class="fa-solid fa-angle-down"></i>
                 </div>
+
+                {
+                    errors.job_state_id && (
+                        <ErrorMessage errorText={errors.job_state_id} />
+                    )
+                }
             </fieldset>
         </div>
         {/* 
