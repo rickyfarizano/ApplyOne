@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { createJob } from '../../../services/jobsServices.js'
-import Joi, { optional } from 'joi'
+import Joi from 'joi'
 
 const schema = Joi.object({
     job_title: Joi.string().min(5).required().messages({
@@ -69,6 +69,9 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
         }))
     }
 
+    /**
+     * Permite enviar el formulairo de creacion de trabajos
+     */
     const submitForm = async (e) => {
         e.preventDefault()
         // error = objeto que contiene los errores en Joi
@@ -119,7 +122,7 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
 
 
   return (
-    <form onSubmit={submitForm}>
+    <form className="add_jobs_form"onSubmit={submitForm}>
         <div className="grupo">
             <fieldset>
                 <label htmlFor="job-title">Nombre del trabajo</label>
@@ -225,9 +228,10 @@ const FormularioCreacionTrabajos = ({platform_states = [], platforms = [], setJo
                 </select>
             </fieldset>
         </div>
-        {/* POR EL MOMENTO VA A QUEDAR ASI, DESPUES SE VA A TENER QUE AGREGAR
-            EL ID DE FORMA DINAMICA EN BASE AL USUARIO QUE SE ENCUENTRE LOGGUEADO
-            Y AUTENTICADO
+        {/* 
+        POR EL MOMENTO VA A QUEDAR ASI, DESPUES SE VA A TENER QUE AGREGAR
+        EL ID DE FORMA DINAMICA EN BASE AL USUARIO QUE SE ENCUENTRE LOGGUEADO
+        Y AUTENTICADO
         */}
         <input type="text" name='user_id' value="1" hidden />
 

@@ -4,6 +4,7 @@ import SortIcon from '../../../../../assets/icons/sort-icon.png'
 import FiltersIcon from '../../../../../assets/icons/filters-icon.png'
 import FiltroPlataformasPostulaciones from '../../../../../components/layout/FiltroPlataformasPostulaciones/FiltroPlataformasPostulaciones.jsx'
 import JobsTable from '../../../../../components/layout/JobsTable/JobsTable.jsx'
+import ModalForms from '../../../../../components/layout/ModalForms/ModalForms.jsx'
 import FormularioCreacionTrabajos from '../../../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
 import { getJobsByPlatform } from '../../../../../services/jobsServices.js'
 import { getAllJobStates } from '../../../../../services/jobStatesServices.js'
@@ -73,19 +74,13 @@ const CentroPostulaciones = () => {
           </div>
 
           {/* modal del formulario */}
-          <div className="modal_formulario">
-            <div className="modal_data">
-              <div className="container_btn">
-                <button className='close_modal'>X</button>
-              </div>
-
-              <FormularioCreacionTrabajos
-              platform_states={jobStates}
-              platforms={allPlatforms}
-              setJobsUpdated={setJobsUpdated}
-              />
-            </div>
-          </div>
+          <ModalForms titleForm="Agregar un nuevo trabajo">
+            <FormularioCreacionTrabajos
+            platform_states={jobStates}
+            platforms={allPlatforms}
+            setJobsUpdated={setJobsUpdated}
+            />
+          </ModalForms>
         </div>
     </section>
     </>
