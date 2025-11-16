@@ -1,3 +1,4 @@
+/* estilos generales del header */
 .header_app {
     width: 100%;
     display: flex;
@@ -12,13 +13,44 @@
     justify-content: flex-end;
     align-items: center;
     padding: 8px;
+    gap: .5rem;
 }
 
+/* estilos del boton de cierre de sesion */
 .btn_close_session {
+    text-decoration: none;
     padding: 8px;
     background-color: #D41515;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* estilos del boton de vinculacion de plataformas */
+.link_platform {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: .5rem;
+    background-color: var(--brand-clr-1);
+    font-size: .8rem;
+    color: #ffffff;
+    font-family: 'Poppins', 'Montserrat', sans-serif;
+    font-weight: 400;
+    transition: .2s all ease-in-out;
+}
+
+.link_platform:hover {
+    background-color: #0734ba;
+    cursor: pointer;
+}
+
+/* estilos del icono del boton de vinculaicon de plataformas */
+.link-platform .link_icon {
+    margin: auto;
 }
