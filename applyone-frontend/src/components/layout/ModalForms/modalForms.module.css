@@ -59,6 +59,7 @@
 .close_modal_btn {
     border: none;
     background-color: transparent;
+    cursor: pointer;
 }
 
 .close_modal_btn .close_icon {

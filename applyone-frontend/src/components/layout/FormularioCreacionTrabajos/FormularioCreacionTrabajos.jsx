@@ -208,7 +208,7 @@ const FormularioCreacionTrabajos = ({
                         <option value="3">Online</option>
                     </select>
 
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i className="fa-solid fa-angle-down"></i>
                 </div>
                 {
                     errors.work_modality_id && (
@@ -257,7 +257,7 @@ const FormularioCreacionTrabajos = ({
                         }
                     </select>
 
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i className="fa-solid fa-angle-down"></i>
                 </div>
                 {
                     errors.linked_platform_id && (
@@ -284,7 +284,7 @@ const FormularioCreacionTrabajos = ({
                         }
                     </select>
                     
-                    <i class="fa-solid fa-angle-down"></i>
+                    <i className="fa-solid fa-angle-down"></i>
                 </div>
 
                 {

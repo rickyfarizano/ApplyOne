@@ -15,6 +15,7 @@ const CentroPostulaciones = () => {
   const [actualPlatform, setActualPlatform] = useState()
   const [jobs_x_platform, setJobs_x_platform] = useState([])
   const [jobStates, setJobStates] = useState([])
+  const [modalState, setModalState] = useState(false)
 
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const CentroPostulaciones = () => {
             <div className={styles.titulo_acciones}>
                 <h1 className={styles.title}>Postulaciones</h1>
                 <div className={styles.actions}>
-                  <a className={styles.btn_add_job} href="#">Agregar postulación<i className="add_job_icon fa-solid fa-plus"></i></a>
+                  <a className={styles.btn_add_job} href="#" onClick={() => setModalState(true)}>Agregar postulación<i className="add_job_icon fa-solid fa-plus"></i></a>
                   <a className={styles.sort_by} href="#">Ordenar por <img src={SortIcon} alt="ordenar por" /></a>
                   <a className={styles.filters} href="#">Filtros <img src={FiltersIcon} alt="filtrar por" /></a>
                 </div>
@@ -74,7 +75,10 @@ const CentroPostulaciones = () => {
           </div>
 
           {/* modal del formulario */}
-          <ModalForms titleForm="Agregar un nuevo trabajo">
+          <ModalForms 
+          titleForm="Agregar un nuevo trabajo"
+          modalState={modalState}
+          setModalState={setModalState}>
             <FormularioCreacionTrabajos
             platform_states={jobStates}
             platforms={allPlatforms}
