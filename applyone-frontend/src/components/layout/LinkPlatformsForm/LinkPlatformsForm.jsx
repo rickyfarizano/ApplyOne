@@ -1,4 +1,28 @@
 import React from 'react'
+import Joi from 'joi'
+
+const schema = Joi.object({
+    platform_name: Joi.string().min(3).required().messages({
+        'string.base': 'El nombre de la paltaforma debe ser un texto',
+        'string.min': 'El nombre de la plataforma debe tener como minimo 3 caracteres',
+        'any.required': 'El nombre de la plataforma es obligatorio y no puede quedar vacio'
+    }),
+    platform_link: Joi.string().min(3).required().messages({
+        'string.base': 'El link de la paltaforma debe ser un texto',
+        'string.min': 'El link de la plataforma debe tener como minimo 3 caracteres',
+        'any.required': 'El link de la plataforma es obligatorio y no puede quedar vacio'
+    }),
+    platform_username: Joi.string().min(3).required().messages({
+        'string.base': 'El nombre de usuario de la paltaforma debe ser un texto',
+        'string.min': 'El nombre de usuario de la plataforma debe tener como minimo 3 caracteres',
+        'any.required': 'El nombre de la plataforma es obligatorio y no puede quedar vacio'
+    }),
+    platform_password: Joi.string().min(3).required().messages({
+        'string.base': 'La contraseña de la paltaforma debe ser un texto',
+        'string.min': 'La contraseña de la plataforma debe tener como minimo 3 caracteres',
+        'any.required': 'La contraseña de la plataforma es obligatoria y no puede quedar vacia'
+    }),
+})
 
 const LinkPlatformsForm = () => {
   return (
@@ -50,7 +74,7 @@ const LinkPlatformsForm = () => {
                 <fieldset>
                     <label htmlFor="platform_password">Ingrese su contraseña registrada en la plataforma</label>
                     <input 
-                    type="text" 
+                    type="password" 
                     className='link_form_input' 
                     id='platform_password' 
                     name='platform_password' 
