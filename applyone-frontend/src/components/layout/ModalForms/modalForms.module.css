@@ -1,0 +1,83 @@
+.open_modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #3737379b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.close_modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #3737374e;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* contenedor principal de la modal */
+.open_modal .container_modal {
+    width: 100%;
+    max-width: 810px;
+    background-color: var(--complementary-clr2);
+    border-radius: 10px;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* contenedor del titulo y el boton de cierre */
+.container_btn_title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* contenedor del boton para cerrar la modal */
+.container_btn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.close_modal_btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.close_modal_btn .close_icon {
+    color: var(--brand-clr-2);
+    font-size: 2.2rem;
+}
+
+/* contenedor dle titulo */
+.container_title {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.container_title .title {
+    font-size: 2rem;
+    font-family: 'Poppins', 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: #000;
+}

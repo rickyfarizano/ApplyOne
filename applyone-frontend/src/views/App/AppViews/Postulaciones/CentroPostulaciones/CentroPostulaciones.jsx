@@ -4,6 +4,7 @@ import SortIcon from '../../../../../assets/icons/sort-icon.png'
 import FiltersIcon from '../../../../../assets/icons/filters-icon.png'
 import FiltroPlataformasPostulaciones from '../../../../../components/layout/FiltroPlataformasPostulaciones/FiltroPlataformasPostulaciones.jsx'
 import JobsTable from '../../../../../components/layout/JobsTable/JobsTable.jsx'
+import ModalForms from '../../../../../components/layout/ModalForms/ModalForms.jsx'
 import FormularioCreacionTrabajos from '../../../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
 import { getJobsByPlatform } from '../../../../../services/jobsServices.js'
 import { getAllJobStates } from '../../../../../services/jobStatesServices.js'
@@ -14,6 +15,7 @@ const CentroPostulaciones = () => {
   const [actualPlatform, setActualPlatform] = useState()
   const [jobs_x_platform, setJobs_x_platform] = useState([])
   const [jobStates, setJobStates] = useState([])
+  const [modalState, setModalState] = useState(false)
 
 
   useEffect(() => {
@@ -57,7 +59,7 @@ const CentroPostulaciones = () => {
             <div className={styles.titulo_acciones}>
                 <h1 className={styles.title}>Postulaciones</h1>
                 <div className={styles.actions}>
-                  <a className={styles.btn_add_job} href="#">Agregar postulación<i className="add_job_icon fa-solid fa-plus"></i></a>
+                  <a className={styles.btn_add_job} href="#" onClick={() => setModalState(true)}>Agregar postulación<i className="add_job_icon fa-solid fa-plus"></i></a>
                   <a className={styles.sort_by} href="#">Ordenar por <img src={SortIcon} alt="ordenar por" /></a>
                   <a className={styles.filters} href="#">Filtros <img src={FiltersIcon} alt="filtrar por" /></a>
                 </div>
@@ -73,19 +75,17 @@ const CentroPostulaciones = () => {
           </div>
 
           {/* modal del formulario */}
-          <div className="modal_formulario">
-            <div className="modal_data">
-              <div className="container_btn">
-                <button className='close_modal'>X</button>
-              </div>
-
-              <FormularioCreacionTrabajos
-              platform_states={jobStates}
-              platforms={allPlatforms}
-              setJobsUpdated={setJobsUpdated}
-              />
-            </div>
-          </div>
+          <ModalForms 
+          titleForm="Agregar un nuevo trabajo"
+          modalState={modalState}
+          setModalState={setModalState}>
+            <FormularioCreacionTrabajos
+            platform_states={jobStates}
+            platforms={allPlatforms}
+            setJobsUpdated={setJobsUpdated}
+            textBtnForm="Agregar trabajo"
+            />
+          </ModalForms>
         </div>
     </section>
     </>

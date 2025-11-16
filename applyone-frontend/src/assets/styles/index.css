@@ -1,10 +1,19 @@
+/* 
+TODO: Crear componente reciclable para el boton de cierre de la modal de los formularios
+TODO: Crear componente reciclable para los inputs de los formularios de la app
+TODO: Crear componente reciclable para los formularios de acciones en la app
+*/
+
 :root {
     --complementary-clr: #F2F2F2;
+    --complementary-clr2: #D9D9D9;
     --brand-clr-1: #0040FF;
     --brand-clr-2: #5E17EB;
     --brand-clr-1-hover: #0734ba;
     --btn-delete: #D41515;
     --btn-delete-hover: #940e0e;
+
+    --form-inputs-bg: #C8C3C3;
 
     --estado-contactado: #15C420;
     --estado-no-contactado: #c40f0f;
@@ -48,4 +57,97 @@ main .container {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+}
+
+/* ESTILOS GENERALES PARA LOS FORMULARIOS DE ACCIONES EN LA APP */
+.action_form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.action_form .grupo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+/* ESTILOS GENERAL ES INPUTS APP */
+.fieldset_app {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.313rem;
+}
+
+.general_label {
+    font-family: 'Poppins', 'Montserrat', sans-serif;
+    font-size: 0.813rem;
+}
+
+.general_input {
+    width: 100%;
+    border-radius: 10px;
+    padding: 1rem;
+    border: none;
+    background-color: var(--form-inputs-bg);
+}
+
+.general_input_error {
+    width: 100%;
+    border-radius: 10px;
+    padding: 1rem;
+    border: none;
+    background-color: var(--form-inputs-bg);
+    outline: 1px solid #ca1111;
+}
+
+.general_input:focus {
+    outline: none;
+}
+
+.general_input::placeholder {
+    font-family: 'Poppins', 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+/* ESTILOS GENERALES DE LOS SELECT DE LOS FORMULARIOS DE LAS APP */
+.container_select {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    background-color: var(--form-inputs-bg);
+    border-radius: 10px;
+}
+
+.general_select_error {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    background-color: var(--form-inputs-bg);
+    border-radius: 10px;
+    outline: 1px solid #ca1111;
+}
+
+.select_app_input {
+    padding: 1rem 0;
+    width: 100%;
+    appearance: unset;
+    border: none;
+    background-color: unset;
+}
+
+.select_app_input:focus {
+    outline: none;
 }
