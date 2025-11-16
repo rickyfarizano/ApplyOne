@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ErrorMessage from '../../ui/ErrorMessage/ErrorMessage.jsx'
+import { registerNewPlatform } from '../../../services/platformsServices.js'
 import Joi from 'joi'
 
 const schema = Joi.object({
+    user_id: "1",
     platform_name: Joi.string().min(3).required().messages({
         'string.base': 'El nombre de la paltaforma debe ser un texto',
         'string.min': 'El nombre de la plataforma debe tener como minimo 3 caracteres',
@@ -25,6 +28,72 @@ const schema = Joi.object({
 })
 
 const LinkPlatformsForm = () => {
+      const [formData, setFormData] = useState({
+      user_id: "1",
+      platform_name: "",
+      platform_link: "",
+      platform_username: "",
+      platform_password: ""
+    })
+
+    const [errors, setErrors] = useState({})
+    const [successMessage, setSuccessMessage] = useState("") 
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+
+    /**
+     * Permite enviar el formulairo de creacion de trabajos
+     */
+    const submitForm = async (e) => {
+        e.preventDefault()
+        // error = objeto que contiene los errores en Joi
+        // value = objeto que contiene los datos validados y sanitizados por Joi
+        const {error,  value} = schema.validate(formData, {abortEarly: false})
+        setSuccessMessage("")
+    
+        const newErrors = {}
+        if(error) {
+            error.details.forEach(detail => {
+                newErrors[detail.path] = detail.message
+            })
+    
+            setErrors(newErrors)
+            console.log(`Errores de validacion: ${newErrors}`)
+            return 
+        }
+    
+        // limpio los errores viejos
+        setErrors({})
+        
+        try {
+            const formData = new FormData()
+            for(const key in value) {
+                formData.append(key, value[key])
+            }
+    
+            const linked_platform = await registerNewPlatform(formData)
+    
+            setFormData({
+                user_id: "1",
+                platform_name: "",
+                platform_link: "",
+                platform_username: "",
+                platform_password: ""
+            })
+    
+            // console.log(linked_platform)
+            setSuccessMessage("Plataforma vinculada exitosamente")
+        }catch(error) {
+            console.error("error al intentar vincular la plataforma", error.message)
+        }
+    }
+
   return (
     <div className="link_platform_modal">
         <button className="close_modal_btn">Cerrar modal</button>
@@ -33,13 +102,13 @@ const LinkPlatformsForm = () => {
                 <h2 className="title">Vincular una nueva plataforma</h2>
             </div>
 
-            <form className="link_platform_form">
+            <form className="link_platform_form" onSubmit={submitForm}>
                 {/* 
                     ID DEL USUARIO. POR EL MOMENTO VA A AGREGARSE DE FORMA MANUAL
                     DESPUES SE VA A AGREGAR DE MANERA DINAMICA EN BASE AL USUARIO
                     LOGUEADO
                 */}
-                <input type="text" value="1" />
+                <input type="text" name='user_id' value="1" onChange={handleChange} hidden />
 
                 <fieldset>
                     <label htmlFor="platform_name">Ingrese el nombre de la plataforma</label>
@@ -48,7 +117,14 @@ const LinkPlatformsForm = () => {
                     className='link_form_input' 
                     id='platform_name' 
                     name='platform_name' 
-                    placeholder='E.j: Computrabajo' />
+                    placeholder='E.j: Computrabajo'
+                    value={formData.platform_name}
+                    onChange={handleChange} />
+                    {
+                        errors.platform_name && (
+                            <ErrorMessage errorText={errors.platform_name} />
+                        )
+                    }
                 </fieldset>
 
                 <fieldset>
@@ -58,7 +134,14 @@ const LinkPlatformsForm = () => {
                     className='link_form_input' 
                     id='platform_link' 
                     name='platform_link' 
-                    placeholder='E.j: http://ar.computrabajo.com' />
+                    placeholder='E.j: http://ar.computrabajo.com'
+                    value={formData.platform_link}
+                    onChange={handleChange} />
+                    {
+                        errors.platform_password && (
+                            <ErrorMessage errorText={errors.platform_password} />
+                        )
+                    }
                 </fieldset>
 
                 <fieldset>
@@ -68,7 +151,14 @@ const LinkPlatformsForm = () => {
                     className='link_form_input' 
                     id='platform_username' 
                     name='platform_username' 
-                    placeholder='E.j: coreo@correo.com' />
+                    placeholder='E.j: coreo@correo.com' 
+                    value={formData.platform_username}
+                    onChange={handleChange} />
+                    {
+                        errors.platform_username && (
+                            <ErrorMessage errorText={errors.platform_username} />
+                        )
+                    }
                 </fieldset>
 
                 <fieldset>
@@ -78,10 +168,17 @@ const LinkPlatformsForm = () => {
                     className='link_form_input' 
                     id='platform_password' 
                     name='platform_password' 
-                    placeholder='E.j: contraseña12345' />
+                    placeholder='E.j: contraseña12345'
+                    value={formData.platform_password}
+                    onChange={handleChange} />
+                    {
+                        errors.platform_password && (
+                            <ErrorMessage errorText={errors.platform_password} />
+                        )
+                    }
                 </fieldset>
 
-                <button className='link_platform_button'>Vincular plataforma</button>
+                <button className='link_platform_button' type='submit'>Vincular plataforma</button>
             </form>
 
         </div>

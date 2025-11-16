@@ -1,6 +1,7 @@
 import React from 'react'
 import HeaderApp from '../../../components/layout/HeaderApp/HeaderApp.jsx'
 import NavBar from '../../../components/layout/NavBar/NavBar.jsx'
+import LinkPlatformsForm from '../../../components/layout/LinkPlatformsForm/LinkPlatformsForm.jsx'
 import { Outlet } from 'react-router-dom' 
 const AppLayout = () => {
   return (
@@ -11,7 +12,7 @@ const AppLayout = () => {
                 <HeaderApp />
                 <Outlet/>
             </div>
-            
+            <LinkPlatformsForm />
         </main>
     </>
   )
