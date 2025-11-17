@@ -247,9 +247,9 @@ const FormularioCreacionTrabajos = ({
                     >
                         <option value="">Seleccione una opcion</option>
                         {
-                            platforms.map(platform => (
+                            platforms.map((platform, index) => (
                                 <option 
-                                key={platform.id} 
+                                key={index} 
                                 value={platform.id}>
                                 {platform.platform_name}
                                 </option>

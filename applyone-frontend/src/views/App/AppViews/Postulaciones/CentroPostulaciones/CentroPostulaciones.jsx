@@ -8,11 +8,15 @@ import ModalForms from '../../../../../components/layout/ModalForms/ModalForms.j
 import FormularioCreacionTrabajos from '../../../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
 import { getJobsByPlatform } from '../../../../../services/jobsServices.js'
 import { getAllJobStates } from '../../../../../services/jobStatesServices.js'
+import { getAllLinkedPlatforms } from '../../../../../services/platformsServices.js'
+import { usePlatforms } from '../../../../../contexts/PlatformsContext.jsx'
 
 const CentroPostulaciones = () => {
   const [jobsUpdated, setJobsUpdated] = useState(false)
-  const [allPlatforms, setAllPlatforms] = useState([])
-  const [actualPlatform, setActualPlatform] = useState()
+  const [platformsUpdated, setPlatformsUpdated] = useState(false)
+
+  const { allPlatforms, setAllPlatforms, actualPlatform, setActualPlatform } = usePlatforms()
+  
   const [jobs_x_platform, setJobs_x_platform] = useState([])
   const [jobStates, setJobStates] = useState([])
   const [modalState, setModalState] = useState(false)
@@ -37,7 +41,7 @@ const CentroPostulaciones = () => {
       }
     }
     getJobsXplatform(actualPlatform)
-  }, [actualPlatform, allPlatforms, jobsUpdated])
+  }, [actualPlatform])
 
   useEffect(() => {
     const getAllStates = async () => {
@@ -51,6 +55,24 @@ const CentroPostulaciones = () => {
     }
 
     getAllStates();
+  }, [])
+
+  useEffect(() => {
+    const getLinkedPlatforms = async () => {
+        try {
+            // llamo al servicio getAllPlatforms
+            const request = await getAllLinkedPlatforms()
+            
+            setAllPlatforms(request)
+
+            if(request.length > 0) {
+                setActualPlatform(request[0].platform_name)
+            }
+        } catch (error) {
+            console.error("Error al obtener las plataformas", error.message);
+        }
+    }
+    getLinkedPlatforms()
   }, [])
   return (
     <>
@@ -68,8 +90,10 @@ const CentroPostulaciones = () => {
           <div className={styles.container_jobs}>
             <FiltroPlataformasPostulaciones 
             setActualPlatform={setActualPlatform} 
-            setAllPlatforms={setAllPlatforms} 
+            setAllPlatforms={setAllPlatforms}
+            allPlatforms={allPlatforms}
             actualPlatform={actualPlatform}
+            setPlatformsUpdated={setPlatformsUpdated}
             />
             <JobsTable filtered_jobs={jobs_x_platform} />
           </div>

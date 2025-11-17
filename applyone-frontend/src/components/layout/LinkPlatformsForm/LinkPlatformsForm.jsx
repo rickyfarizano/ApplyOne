@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ErrorMessage from '../../ui/ErrorMessage/ErrorMessage.jsx'
 import { registerNewPlatform } from '../../../services/platformsServices.js'
+import { usePlatforms } from '../../../contexts/PlatformsContext.jsx'
 import Joi from 'joi'
 
 const schema = Joi.object({
@@ -35,6 +36,8 @@ const LinkPlatformsForm = () => {
       platform_username: "",
       platform_password: ""
     })
+
+    const {allPlatforms, setAllPlatforms} = usePlatforms()
 
     const [errors, setErrors] = useState({})
     const [successMessage, setSuccessMessage] = useState("") 
@@ -72,12 +75,12 @@ const LinkPlatformsForm = () => {
         setErrors({})
         
         try {
-            const formData = new FormData()
+            const data = new FormData()
             for(const key in value) {
-                formData.append(key, value[key])
+                data.append(key, value[key])
             }
     
-            const linked_platform = await registerNewPlatform(formData)
+            const linked_platform = await registerNewPlatform(data)
     
             setFormData({
                 user_id: "1",
@@ -86,6 +89,8 @@ const LinkPlatformsForm = () => {
                 platform_username: "",
                 platform_password: ""
             })
+
+            setAllPlatforms(data => [...data, formData])
     
             // console.log(linked_platform)
             setSuccessMessage("Plataforma vinculada exitosamente")
