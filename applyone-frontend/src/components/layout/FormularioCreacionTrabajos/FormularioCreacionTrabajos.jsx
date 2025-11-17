@@ -304,6 +304,14 @@ const FormularioCreacionTrabajos = ({
         bgColorHover="#119219"
         btnType="submit"
         />
+
+        {
+            successMessage && (
+                <div className="success_message">
+                    <p className="message">{successMessage}</p>
+                </div>
+            ) 
+        }
     </form>
   )
 }

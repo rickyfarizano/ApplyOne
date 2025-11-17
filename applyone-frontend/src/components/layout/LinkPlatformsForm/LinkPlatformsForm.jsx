@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ErrorMessage from '../../ui/ErrorMessage/ErrorMessage.jsx'
 import { registerNewPlatform } from '../../../services/platformsServices.js'
 import { usePlatforms } from '../../../contexts/PlatformsContext.jsx'
@@ -92,13 +92,19 @@ const LinkPlatformsForm = ({isOpen, setIsOpen}) => {
             })
 
             setAllPlatforms(data => [...data, formData])
+            setSuccessMessage("Plataforma vinculada exitosamente")
     
             // console.log(linked_platform)
-            setSuccessMessage("Plataforma vinculada exitosamente")
         }catch(error) {
             console.error("error al intentar vincular la plataforma", error.message)
         }
     }
+
+    useEffect(() => {
+        if(!isOpen && successMessage) {
+            setSuccessMessage("")
+        }
+    }, [isOpen])
 
   return (
     <div className={ isOpen ? styles.open_link_platform_modal : styles.close_link_platform_modal }>
@@ -187,8 +193,16 @@ const LinkPlatformsForm = ({isOpen, setIsOpen}) => {
                     }
                 </fieldset>
 
+                {
+                    successMessage !== '' && (
+                        <div className="success_message">
+                            <p className="message">{successMessage}</p>
+                        </div>
+                    ) 
+                }
                 <button className={styles.link_platform_button} type='submit'>Vincular plataforma</button>
             </form>
+
         </div>
 
     </div>
