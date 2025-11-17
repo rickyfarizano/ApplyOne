@@ -151,3 +151,13 @@ main .container {
 .select_app_input:focus {
     outline: none;
 }
+
+.success_message {
+    background-color: #0fa719;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.success_message .message {
+    color: #ffffff;
+}

@@ -46,9 +46,7 @@ const schema = Joi.object({
 
 const FormularioCreacionTrabajos = ({
     platform_states = [], 
-    platforms = [], 
-    setJobsUpdated,
-    textBtnForm
+    platforms = [],
 }) => {
     const [formData, setFormData] = useState({
         job_title: "",
@@ -108,8 +106,6 @@ const FormularioCreacionTrabajos = ({
             }
 
             const job = await createJob(formData)
-
-            setJobsUpdated(true)
 
             setFormData({
                 job_title: "",
@@ -247,9 +243,9 @@ const FormularioCreacionTrabajos = ({
                     >
                         <option value="">Seleccione una opcion</option>
                         {
-                            platforms.map(platform => (
+                            platforms.map((platform, index) => (
                                 <option 
-                                key={platform.id} 
+                                key={index} 
                                 value={platform.id}>
                                 {platform.platform_name}
                                 </option>
@@ -308,6 +304,14 @@ const FormularioCreacionTrabajos = ({
         bgColorHover="#119219"
         btnType="submit"
         />
+
+        {
+            successMessage && (
+                <div className="success_message">
+                    <p className="message">{successMessage}</p>
+                </div>
+            ) 
+        }
     </form>
   )
 }

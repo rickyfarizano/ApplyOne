@@ -22,14 +22,14 @@ const JobsTable = ({filtered_jobs = []}) => {
                     <td>No hay trabajos disponibles</td>
                 </tr>
             ) : (
-                filtered_jobs.map(job => (
+                filtered_jobs.map((job, index) => (
                     <JobsData
                     job_id={job.id}
                     job_title={job.job_title}
                     company_name={job.company_name}
                     start_date={"00/00/00"}
                     job_state={job.job_state.state_name}
-                    key={job.id}
+                    key={index}
                     />
                 ))
             )

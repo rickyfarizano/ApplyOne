@@ -6,52 +6,21 @@ import FiltroPlataformasPostulaciones from '../../../../../components/layout/Fil
 import JobsTable from '../../../../../components/layout/JobsTable/JobsTable.jsx'
 import ModalForms from '../../../../../components/layout/ModalForms/ModalForms.jsx'
 import FormularioCreacionTrabajos from '../../../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
-import { getJobsByPlatform } from '../../../../../services/jobsServices.js'
-import { getAllJobStates } from '../../../../../services/jobStatesServices.js'
+import { usePlatforms } from '../../../../../contexts/PlatformsContext.jsx'
+import { useJobs } from '../../../../../contexts/JobsContext.jsx' 
+import { useJobStates } from '../../../../../contexts/JobStatesContext.jsx'
 
 const CentroPostulaciones = () => {
-  const [jobsUpdated, setJobsUpdated] = useState(false)
-  const [allPlatforms, setAllPlatforms] = useState([])
-  const [actualPlatform, setActualPlatform] = useState()
-  const [jobs_x_platform, setJobs_x_platform] = useState([])
-  const [jobStates, setJobStates] = useState([])
-  const [modalState, setModalState] = useState(false)
+  const { allPlatforms, setAllPlatforms, actualPlatform, setActualPlatform } = usePlatforms()
+  const { jobsXplatform, setJobsXplatform, fetchJobsByPlatform } = useJobs()
+  const { jobStates, setJobStates } = useJobStates()
 
+  const [modalState, setModalState] = useState(false)
 
   useEffect(() => {
     if(!actualPlatform) return;
-    // reinicio setJobsUpdated
-    setJobsUpdated(false)
-    const getJobsXplatform = async (actualPlatform) => {
-      try {
-        if(!allPlatforms.includes(actualPlatform)) {
-          setJobs_x_platform([])
-        }
-
-        // utilizo el service para obtener trabajos por una plataforma concreta
-        const request = await getJobsByPlatform(actualPlatform);
-        // console.log(request)
-        setJobs_x_platform(request);
-      } catch (error) {
-        console.error("Error al obtener los trabajos", error.message);
-      }
-    }
-    getJobsXplatform(actualPlatform)
-  }, [actualPlatform, allPlatforms, jobsUpdated])
-
-  useEffect(() => {
-    const getAllStates = async () => {
-      try {
-        // utilizo el service para obtener los estados de los trabajos
-        const request = await getAllJobStates();
-        setJobStates(request)
-      } catch (error) {
-        console.error("Error al obtener los trabajos", error.message);
-      }
-    }
-
-    getAllStates();
-  }, [])
+    fetchJobsByPlatform(actualPlatform)
+  }, [actualPlatform])
   return (
     <>
     <section className={styles.centro_postulaciones}>
@@ -68,10 +37,11 @@ const CentroPostulaciones = () => {
           <div className={styles.container_jobs}>
             <FiltroPlataformasPostulaciones 
             setActualPlatform={setActualPlatform} 
-            setAllPlatforms={setAllPlatforms} 
             actualPlatform={actualPlatform}
+            setAllPlatforms={setAllPlatforms}
+            allPlatforms={allPlatforms}
             />
-            <JobsTable filtered_jobs={jobs_x_platform} />
+            <JobsTable filtered_jobs={jobsXplatform} />
           </div>
 
           {/* modal del formulario */}
@@ -82,8 +52,6 @@ const CentroPostulaciones = () => {
             <FormularioCreacionTrabajos
             platform_states={jobStates}
             platforms={allPlatforms}
-            setJobsUpdated={setJobsUpdated}
-            textBtnForm="Agregar trabajo"
             />
           </ModalForms>
         </div>
