@@ -6,36 +6,21 @@ import FiltroPlataformasPostulaciones from '../../../../../components/layout/Fil
 import JobsTable from '../../../../../components/layout/JobsTable/JobsTable.jsx'
 import ModalForms from '../../../../../components/layout/ModalForms/ModalForms.jsx'
 import FormularioCreacionTrabajos from '../../../../../components/layout/FormularioCreacionTrabajos/FormularioCreacionTrabajos.jsx'
-import { getJobsByPlatform } from '../../../../../services/jobsServices.js'
-import { getAllJobStates } from '../../../../../services/jobStatesServices.js'
-import { getAllLinkedPlatforms } from '../../../../../services/platformsServices.js'
 import { usePlatforms } from '../../../../../contexts/PlatformsContext.jsx'
 import { useJobs } from '../../../../../contexts/JobsContext.jsx' 
+import { useJobStates } from '../../../../../contexts/JobStatesContext.jsx'
 
 const CentroPostulaciones = () => {
   const { allPlatforms, setAllPlatforms, actualPlatform, setActualPlatform } = usePlatforms()
   const { jobsXplatform, setJobsXplatform, fetchJobsByPlatform } = useJobs()
-  const [jobStates, setJobStates] = useState([])
+  const { jobStates, setJobStates } = useJobStates()
+
   const [modalState, setModalState] = useState(false)
 
   useEffect(() => {
     if(!actualPlatform) return;
     fetchJobsByPlatform(actualPlatform)
   }, [actualPlatform])
-
-  useEffect(() => {
-    const getAllStates = async () => {
-      try {
-        // utilizo el service para obtener los estados de los trabajos
-        const request = await getAllJobStates();
-        setJobStates(request)
-      } catch (error) {
-        console.error("Error al obtener los trabajos", error.message);
-      }
-    }
-
-    getAllStates();
-  }, [])
   return (
     <>
     <section className={styles.centro_postulaciones}>
