@@ -3,6 +3,7 @@ import ErrorMessage from '../../ui/ErrorMessage/ErrorMessage.jsx'
 import { registerNewPlatform } from '../../../services/platformsServices.js'
 import { usePlatforms } from '../../../contexts/PlatformsContext.jsx'
 import Joi from 'joi'
+import styles from './linkPlatformsForm.module.css'
 
 const schema = Joi.object({
     user_id: "1",
@@ -100,14 +101,17 @@ const LinkPlatformsForm = () => {
     }
 
   return (
-    <div className="link_platform_modal">
-        <button className="close_modal_btn">Cerrar modal</button>
-        <div className="container">
-            <div className="container_title">
-                <h2 className="title">Vincular una nueva plataforma</h2>
+    <div className={styles.open_link_platform_modal}>
+        <div className={styles.container_btn}>
+            <button className={styles.close_modal_btn}><i className={`${styles.close_icon} fa-solid fa-xmark`}></i></button>
+        </div>
+        
+        <div className={styles.container}>
+            <div className={styles.container_title}>
+                <h2 className={styles.title}>Vincular una nueva plataforma</h2>
             </div>
 
-            <form className="link_platform_form" onSubmit={submitForm}>
+            <form className={styles.link_platform_form} onSubmit={submitForm}>
                 {/* 
                     ID DEL USUARIO. POR EL MOMENTO VA A AGREGARSE DE FORMA MANUAL
                     DESPUES SE VA A AGREGAR DE MANERA DINAMICA EN BASE AL USUARIO
@@ -115,11 +119,11 @@ const LinkPlatformsForm = () => {
                 */}
                 <input type="text" name='user_id' value="1" onChange={handleChange} hidden />
 
-                <fieldset>
-                    <label htmlFor="platform_name">Ingrese el nombre de la plataforma</label>
+                <fieldset className={styles.fieldset}>
+                    <label className={styles.label} htmlFor="platform_name">Ingrese el nombre de la plataforma</label>
                     <input 
                     type="text" 
-                    className='link_form_input' 
+                    className={styles.link_form_input}
                     id='platform_name' 
                     name='platform_name' 
                     placeholder='E.j: Computrabajo'
@@ -132,11 +136,11 @@ const LinkPlatformsForm = () => {
                     }
                 </fieldset>
 
-                <fieldset>
-                    <label htmlFor="platform_link">Ingrese el link de la plataforma</label>
+                <fieldset className={styles.fieldset}>
+                    <label className={styles.label} htmlFor="platform_link">Ingrese el link de la plataforma</label>
                     <input 
                     type="text" 
-                    className='link_form_input' 
+                    className={styles.link_form_input} 
                     id='platform_link' 
                     name='platform_link' 
                     placeholder='E.j: http://ar.computrabajo.com'
@@ -149,11 +153,11 @@ const LinkPlatformsForm = () => {
                     }
                 </fieldset>
 
-                <fieldset>
-                    <label htmlFor="platform_username">Ingrese su nombre de usuario registrado en la plataforma</label>
+                <fieldset className={styles.fieldset}>
+                    <label className={styles.label} htmlFor="platform_username">Ingrese su nombre de usuario registrado en la plataforma</label>
                     <input 
                     type="text" 
-                    className='link_form_input' 
+                    className={styles.link_form_input} 
                     id='platform_username' 
                     name='platform_username' 
                     placeholder='E.j: coreo@correo.com' 
@@ -166,11 +170,11 @@ const LinkPlatformsForm = () => {
                     }
                 </fieldset>
 
-                <fieldset>
-                    <label htmlFor="platform_password">Ingrese su contraseña registrada en la plataforma</label>
+                <fieldset className={styles.fieldset}>
+                    <label className={styles.label} htmlFor="platform_password">Ingrese su contraseña registrada en la plataforma</label>
                     <input 
                     type="password" 
-                    className='link_form_input' 
+                    className={styles.link_form_input} 
                     id='platform_password' 
                     name='platform_password' 
                     placeholder='E.j: contraseña12345'
@@ -183,10 +187,10 @@ const LinkPlatformsForm = () => {
                     }
                 </fieldset>
 
-                <button className='link_platform_button' type='submit'>Vincular plataforma</button>
+                <button className={styles.link_platform_button} type='submit'>Vincular plataforma</button>
             </form>
-
         </div>
+
     </div>
   )
 }
