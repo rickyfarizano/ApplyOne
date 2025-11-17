@@ -29,7 +29,7 @@ const schema = Joi.object({
     }),
 })
 
-const LinkPlatformsForm = () => {
+const LinkPlatformsForm = ({isOpen, setIsOpen}) => {
       const [formData, setFormData] = useState({
       user_id: "1",
       platform_name: "",
@@ -101,9 +101,9 @@ const LinkPlatformsForm = () => {
     }
 
   return (
-    <div className={styles.open_link_platform_modal}>
+    <div className={ isOpen ? styles.open_link_platform_modal : styles.close_link_platform_modal }>
         <div className={styles.container_btn}>
-            <button className={styles.close_modal_btn}><i className={`${styles.close_icon} fa-solid fa-xmark`}></i></button>
+            <button onClick={() => setIsOpen(false)} className={styles.close_modal_btn}><i className={`${styles.close_icon} fa-solid fa-xmark`}></i></button>
         </div>
         
         <div className={styles.container}>
