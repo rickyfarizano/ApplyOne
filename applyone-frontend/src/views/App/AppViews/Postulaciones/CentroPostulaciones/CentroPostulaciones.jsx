@@ -10,37 +10,17 @@ import { getJobsByPlatform } from '../../../../../services/jobsServices.js'
 import { getAllJobStates } from '../../../../../services/jobStatesServices.js'
 import { getAllLinkedPlatforms } from '../../../../../services/platformsServices.js'
 import { usePlatforms } from '../../../../../contexts/PlatformsContext.jsx'
+import { useJobs } from '../../../../../contexts/JobsContext.jsx' 
 
 const CentroPostulaciones = () => {
-  const [jobsUpdated, setJobsUpdated] = useState(false)
-  const [platformsUpdated, setPlatformsUpdated] = useState(false)
-
   const { allPlatforms, setAllPlatforms, actualPlatform, setActualPlatform } = usePlatforms()
-  
-  const [jobs_x_platform, setJobs_x_platform] = useState([])
+  const { jobsXplatform, setJobsXplatform, fetchJobsByPlatform } = useJobs()
   const [jobStates, setJobStates] = useState([])
   const [modalState, setModalState] = useState(false)
 
-
   useEffect(() => {
     if(!actualPlatform) return;
-    // reinicio setJobsUpdated
-    setJobsUpdated(false)
-    const getJobsXplatform = async (actualPlatform) => {
-      try {
-        if(!allPlatforms.includes(actualPlatform)) {
-          setJobs_x_platform([])
-        }
-
-        // utilizo el service para obtener trabajos por una plataforma concreta
-        const request = await getJobsByPlatform(actualPlatform);
-        // console.log(request)
-        setJobs_x_platform(request);
-      } catch (error) {
-        console.error("Error al obtener los trabajos", error.message);
-      }
-    }
-    getJobsXplatform(actualPlatform)
+    fetchJobsByPlatform(actualPlatform)
   }, [actualPlatform])
 
   useEffect(() => {
@@ -55,24 +35,6 @@ const CentroPostulaciones = () => {
     }
 
     getAllStates();
-  }, [])
-
-  useEffect(() => {
-    const getLinkedPlatforms = async () => {
-        try {
-            // llamo al servicio getAllPlatforms
-            const request = await getAllLinkedPlatforms()
-            
-            setAllPlatforms(request)
-
-            if(request.length > 0) {
-                setActualPlatform(request[0].platform_name)
-            }
-        } catch (error) {
-            console.error("Error al obtener las plataformas", error.message);
-        }
-    }
-    getLinkedPlatforms()
   }, [])
   return (
     <>
@@ -90,12 +52,11 @@ const CentroPostulaciones = () => {
           <div className={styles.container_jobs}>
             <FiltroPlataformasPostulaciones 
             setActualPlatform={setActualPlatform} 
+            actualPlatform={actualPlatform}
             setAllPlatforms={setAllPlatforms}
             allPlatforms={allPlatforms}
-            actualPlatform={actualPlatform}
-            setPlatformsUpdated={setPlatformsUpdated}
             />
-            <JobsTable filtered_jobs={jobs_x_platform} />
+            <JobsTable filtered_jobs={jobsXplatform} />
           </div>
 
           {/* modal del formulario */}
@@ -106,8 +67,6 @@ const CentroPostulaciones = () => {
             <FormularioCreacionTrabajos
             platform_states={jobStates}
             platforms={allPlatforms}
-            setJobsUpdated={setJobsUpdated}
-            textBtnForm="Agregar trabajo"
             />
           </ModalForms>
         </div>

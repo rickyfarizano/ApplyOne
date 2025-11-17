@@ -46,9 +46,7 @@ const schema = Joi.object({
 
 const FormularioCreacionTrabajos = ({
     platform_states = [], 
-    platforms = [], 
-    setJobsUpdated,
-    textBtnForm
+    platforms = [],
 }) => {
     const [formData, setFormData] = useState({
         job_title: "",
@@ -108,8 +106,6 @@ const FormularioCreacionTrabajos = ({
             }
 
             const job = await createJob(formData)
-
-            setJobsUpdated(true)
 
             setFormData({
                 job_title: "",
